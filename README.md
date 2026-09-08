@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="./faoxima.jpg" alt="faoxima" width="96" height="96" style="border-radius:50%">
+<img src="./faoxima-circle.png" alt="faoxima" width="96" height="96">
 
 # faoxima docs
 
@@ -42,8 +42,6 @@
 - 🎨 **پنل وب ادمین** بازطراحی‌شده با ظاهر مدرن
 
 
----
-
 <div align="center">
 
 📄 لایسنس: **GPL-3.0** — این پروژه رایگان و متن‌باز است؛ فروش آن تخلف محسوب می‌شود.
@@ -51,4 +49,3 @@
 Made with ❤️ for the faoxima community
 
 </div>
-
