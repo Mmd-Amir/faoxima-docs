@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="light"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="مستندات ربات faoxima — ربات تلگرامی فروش و مدیریت خودکار نمایندگی VPN، ریفکتورشده از سورس متن‌باز میرزا.">
+<title>faoxima · مستندات ربات</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffffff;
+  --bg-soft:#f7f7f8;
+  --surface:#ffffff;
+  --surface-2:#fafafa;
+  --border:#e7e7ea;
+  --border-strong:#d9d9de;
+  --text:#17171b;
+  --text-2:#3f3f46;
+  --muted:#71717a;
+  --primary:#16161a;
+  --primary-ink:#ffffff;
+  --accent:#5a63ff;
+  --accent-soft:rgba(90,99,255,.10);
+  --note:#3b82f6;
+  --note-soft:rgba(59,130,246,.09);
+  --warn:#d97706;
+  --warn-soft:rgba(217,119,6,.10);
+  --ok:#16a34a;
+  --grid-line:rgba(0,0,0,.045);
+  --shadow:0 1px 2px rgba(20,20,30,.04),0 8px 24px -12px rgba(20,20,30,.10);
+  --radius:14px;
+  --radius-sm:10px;
+  --topbar-h:62px;
+  --mono:ui-monospace,"SF Mono","JetBrains Mono","Cascadia Code",Menlo,Consolas,monospace;
+}
+html[data-theme="dark"]{
+  --bg:#0b0b0d;
+  --bg-soft:#0f0f12;
+  --surface:#141417;
+  --surface-2:#17171b;
+  --border:#26262b;
+  --border-strong:#33333a;
+  --text:#ededef;
+  --text-2:#c8c8cd;
+  --muted:#8d8d97;
+  --primary:#fafafa;
+  --primary-ink:#0b0b0d;
+  --accent:#7c84ff;
+  --accent-soft:rgba(124,132,255,.14);
+  --note:#5b9dff;
+  --note-soft:rgba(91,157,255,.12);
+  --warn:#f0a23b;
+  --warn-soft:rgba(240,162,59,.12);
+  --ok:#43c463;
+  --grid-line:rgba(255,255,255,.05);
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px -14px rgba(0,0,0,.6);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:"Vazirmatn",Tahoma,system-ui,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.85;
+  font-size:16px;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+a,button,.iconbtn,.brand,.nav-link{-webkit-tap-highlight-color:transparent;outline:none}
+a:focus,button:focus,.iconbtn:focus,.brand:focus,.nav-link:focus{outline:none}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+.icon{width:1.15em;height:1.15em;flex:0 0 auto;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;vertical-align:-.18em}
+
+/* Topbar */
+.topbar{
+  position:sticky;top:0;z-index:60;height:var(--topbar-h);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 clamp(16px,4vw,40px);
+  background:color-mix(in srgb,var(--bg) 86%,transparent);
+  backdrop-filter:saturate(160%) blur(10px);
+  border-bottom:1px solid var(--border);
+}
+.brand{display:flex;align-items:center;gap:11px;color:var(--text);direction:ltr}
+.brand:hover{text-decoration:none}
+.brand-pill{
+  display:flex;align-items:center;gap:9px;background:var(--surface-2);border:1px solid var(--border);
+  border-radius:999px;padding:0 16px 0 0;box-shadow:var(--shadow);height:36px;
+}
+.brand-pill-sm{height:28px;gap:7px;padding-inline-end:12px;direction:ltr}
+.brand-pill-sm b{font-size:13px}
+.logo{
+  width:36px;height:36px;border-radius:50%;display:grid;place-items:center;overflow:hidden;flex-shrink:0;
+  background:#fff;color:var(--primary-ink);font-weight:800;font-size:18px;
+  margin:-1px;box-shadow:0 1px 3px rgba(20,20,30,.18),0 3px 8px rgba(20,20,30,.14);
+}
+html[data-theme="dark"] .logo{box-shadow:none}
+.brand-pill-sm .logo{width:28px;height:28px}
+.logo img{width:100%;height:100%;object-fit:contain;object-position:center;transform:scale(1.35);display:block}
+.brand b{font-weight:800;font-size:18px;letter-spacing:-.01em}
+.brand .sub{color:var(--muted);font-size:13px;font-weight:500;border-left:1px solid var(--border-strong);padding-left:11px;margin-left:2px;direction:rtl}
+.bar-actions{display:flex;align-items:center;gap:6px}
+.iconbtn{
+  width:38px;height:38px;border-radius:10px;border:1px solid transparent;background:transparent;
+  color:var(--text-2);cursor:pointer;display:grid;place-items:center;transition:background .15s,color .15s,border-color .15s;
+}
+.iconbtn:hover{background:var(--bg-soft);color:var(--text);border-color:var(--border)}
+.iconbtn .icon{width:19px;height:19px}
+#menuBtn{display:none}
+.moon{display:none}
+html[data-theme="dark"] .sun{display:none}
+html[data-theme="dark"] .moon{display:block}
+
+/* Hero */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--border);background:var(--bg)}
+.hero .grid{
+  position:absolute;inset:0;z-index:0;
+  background-image:linear-gradient(var(--grid-line) 1px,transparent 1px),linear-gradient(90deg,var(--grid-line) 1px,transparent 1px);
+  background-size:46px 46px;
+  -webkit-mask-image:radial-gradient(120% 90% at 50% 18%,#000 38%,transparent 80%);
+  mask-image:radial-gradient(120% 90% at 50% 18%,#000 38%,transparent 80%);
+}
+.hero-inner{position:relative;z-index:1;max-width:880px;margin:0 auto;padding:clamp(64px,11vw,120px) 24px clamp(48px,7vw,80px);text-align:center}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--text-2);
+  background:var(--surface);border:1px solid var(--border);padding:6px 14px;border-radius:999px;margin-bottom:24px;box-shadow:var(--shadow);
+}
+.eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 3px color-mix(in srgb,var(--ok) 22%,transparent)}
+h1.title{font-size:clamp(3rem,11vw,6rem);font-weight:900;letter-spacing:-.03em;line-height:1.02;margin:0 0 18px}
+.lede{font-size:clamp(1.05rem,2.6vw,1.3rem);color:var(--muted);max-width:560px;margin:0 auto 30px;font-weight:500}
+.cta-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn{
+  display:inline-flex;align-items:center;gap:9px;font-family:inherit;font-size:15px;font-weight:700;
+  padding:12px 22px;border-radius:12px;cursor:pointer;border:1px solid transparent;transition:transform .12s,background .15s,border-color .15s;
+}
+.btn:hover{text-decoration:none;transform:translateY(-1px)}
+.btn-primary{background:var(--primary);color:var(--primary-ink)}
+.btn-ghost{background:var(--surface);color:var(--text);border-color:var(--border-strong)}
+.btn-telegram .icon{stroke:none}
+.btn-telegram .icon circle{fill:#29a9eb}
+.btn-telegram .icon path{fill:#fff}
+.btn-ghost:hover{background:var(--bg-soft)}
+.badges{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin-top:38px}
+.badge{display:inline-flex;align-items:stretch;border-radius:8px;overflow:hidden;font-size:12px;font-weight:600;box-shadow:var(--shadow);border:1px solid var(--border);direction:ltr}
+.badge .k{background:var(--surface-2);color:var(--text-2);padding:5px 10px}
+.badge .v{padding:5px 10px;color:#fff}
+.b-license .v{background:#3da639}
+.b-php .v{background:#777bb3}
+.b-tg .v{background:#2aabee}
+.b-app .v{background:var(--accent)}
+.b-bot .v{background:#16161a}
+html[data-theme="dark"] .b-bot .v{background:#4b4b55}
+.b-base .v{background:#b9472f}
+
+/* Layout */
+.shell{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:266px minmax(0,1fr);gap:0}
+.sidebar{
+  position:sticky;top:var(--topbar-h);align-self:start;height:calc(100vh - var(--topbar-h));overflow-y:auto;
+  padding:30px 22px 60px;border-inline-end:1px solid var(--border);
+}
+.sidebar::-webkit-scrollbar{width:8px}
+.sidebar::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:8px}
+.nav-group+.nav-group{margin-top:24px}
+.nav-group>.gt{font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;padding:0 10px;margin-bottom:8px}
+.nav-link{
+  display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:9px;color:var(--text-2);
+  font-size:14.5px;font-weight:500;position:relative;transition:background .14s,color .14s;
+}
+.nav-link:hover{background:var(--bg-soft);color:var(--text);text-decoration:none}
+.nav-link .icon{width:17px;height:17px;color:var(--muted)}
+.nav-link.active{background:var(--accent-soft);color:var(--accent);font-weight:700}
+.nav-link.active .icon{color:var(--accent)}
+.nav-link.active::before{content:"";position:absolute;inset-inline-end:-22px;top:50%;transform:translateY(-50%);width:3px;height:20px;border-radius:3px;background:var(--accent)}
+
+.content{padding:clamp(28px,5vw,56px) clamp(20px,5vw,64px);min-width:0}
+.content section{scroll-margin-top:calc(var(--topbar-h) + 18px)}
+.content section+section{margin-top:62px;padding-top:46px;border-top:1px solid var(--border)}
+.kicker{font-size:12.5px;font-weight:700;letter-spacing:.06em;color:var(--accent);text-transform:uppercase;margin-bottom:10px}
+.content h2{display:flex;align-items:center;gap:12px;font-size:clamp(1.55rem,4vw,2rem);font-weight:800;letter-spacing:-.02em;margin:0 0 8px;line-height:1.25}
+.content h2 .hi{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent)}
+.content h2 .hi .icon{width:20px;height:20px;stroke-width:1.9}
+.content h3{font-size:1.18rem;font-weight:700;margin:34px 0 12px;letter-spacing:-.01em}
+.content p{color:var(--text-2);margin:0 0 14px}
+.lead-p{font-size:1.07rem;color:var(--muted)}
+.content ul,.content ol{color:var(--text-2);padding-inline-start:1.4em;margin:0 0 16px}
+.content li{margin:7px 0}
+.content li::marker{color:var(--accent)}
+strong{color:var(--text);font-weight:700}
+
+/* Inline code + code blocks */
+code.inl{font-family:var(--mono);font-size:.86em;background:var(--bg-soft);border:1px solid var(--border);padding:.12em .42em;border-radius:6px;color:var(--text);direction:ltr;unicode-bidi:embed}
+.codeblock{position:relative;margin:0 0 18px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface-2);overflow:hidden}
+.codeblock .cap{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;border-bottom:1px solid var(--border);background:var(--surface);font-size:12.5px;color:var(--muted);font-weight:600}
+.codeblock .cap .lang{font-family:var(--mono);text-transform:uppercase;letter-spacing:.05em}
+.copy{font-family:inherit;font-size:12px;font-weight:600;color:var(--text-2);background:transparent;border:1px solid var(--border);border-radius:7px;padding:4px 11px;cursor:pointer;transition:background .14s,color .14s}
+.copy:hover{background:var(--bg-soft);color:var(--text)}
+.copy.done{color:var(--ok);border-color:color-mix(in srgb,var(--ok) 40%,var(--border))}
+.codeblock pre{margin:0;padding:16px;overflow-x:auto;direction:ltr;text-align:left}
+.codeblock code{font-family:var(--mono);font-size:13.5px;line-height:1.7;color:var(--text);white-space:pre}
+.codeblock.fa pre{direction:rtl;text-align:right}
+.tok-c{color:var(--muted)}
+.tok-k{color:var(--accent);font-weight:600}
+
+/* Callouts */
+.callout{border:1px solid var(--border);border-inline-start-width:4px;border-radius:var(--radius-sm);padding:14px 16px;margin:0 0 18px;background:var(--surface)}
+.callout .ct{display:flex;align-items:center;gap:8px;font-weight:700;margin-bottom:4px}
+.callout p{margin:0;color:var(--text-2)}
+.callout.note{border-inline-start-color:var(--note);background:var(--note-soft)}
+.callout.note .ct{color:var(--note)}
+.callout.warn{border-inline-start-color:var(--warn);background:var(--warn-soft)}
+.callout.warn .ct{color:var(--warn)}
+
+/* Tables */
+.tablewrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius-sm);margin:0 0 18px;box-shadow:var(--shadow)}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px}
+thead th{background:var(--surface-2);text-align:right;font-weight:700;color:var(--text);padding:11px 14px;border-bottom:1px solid var(--border-strong);white-space:nowrap}
+tbody td{padding:11px 14px;border-bottom:1px solid var(--border);color:var(--text-2);vertical-align:top}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--bg-soft)}
+td code,th code{font-family:var(--mono);font-size:12.5px;background:var(--bg-soft);border:1px solid var(--border);padding:.1em .4em;border-radius:6px;color:var(--text);direction:ltr;display:inline-block}
+.tag-new{display:inline-flex;align-items:center;font-size:11px;font-weight:700;color:#fff;background:var(--accent);padding:1px 8px;border-radius:999px;margin-inline-start:6px;vertical-align:middle;white-space:nowrap}
+#panels td:first-child{white-space:nowrap}
+.todo{display:inline-block;font-size:11px;font-weight:700;color:var(--warn);background:var(--warn-soft);border:1px dashed var(--warn);padding:1px 8px;border-radius:6px}
+.tag-ok{display:inline-block;font-size:11px;font-weight:700;color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,transparent);border:1px solid var(--ok);padding:1px 8px;border-radius:6px}
+
+/* Feature grid */
+.grid-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:14px;margin:6px 0 4px}
+.card{border:1px solid var(--border);border-radius:var(--radius);padding:16px 17px;background:var(--surface);transition:transform .14s,border-color .14s,box-shadow .14s}
+.card:hover{transform:translateY(-2px);border-color:var(--border-strong);box-shadow:var(--shadow)}
+.card .ico{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent);margin-bottom:11px;font-size:19px}
+.card h4{margin:0 0 4px;font-size:15px;font-weight:700;color:var(--text)}
+.card p{margin:0;font-size:13.5px;color:var(--muted);line-height:1.7}
+
+/* Steps */
+.steps{list-style:none;counter-reset:s;padding:0;margin:0}
+.steps>li{counter-increment:s;position:relative;padding-inline-start:52px;padding-bottom:26px;border-inline-start:2px solid var(--border);margin-inline-start:16px}
+.steps>li:last-child{border-inline-start-color:transparent;padding-bottom:0}
+.steps>li::before{content:counter(s);position:absolute;inset-inline-start:-17px;top:-2px;width:32px;height:32px;border-radius:50%;background:var(--primary);color:var(--primary-ink);display:grid;place-items:center;font-weight:800;font-size:14px;box-shadow:0 0 0 4px var(--bg)}
+.steps h4{margin:0 0 6px;font-size:16px;font-weight:700;color:var(--text)}
+.steps p{margin:0 0 10px}
+
+/* Screenshot placeholder */
+.shot{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;border:2px dashed var(--border-strong);border-radius:var(--radius-sm);background:var(--bg-soft);color:var(--muted);padding:30px 20px;margin:0 0 14px;text-align:center}
+.shot .icon{width:28px;height:28px;stroke-width:1.5}
+.shot span{font-size:13px;font-weight:600}
+
+/* Accordion */
+.acc{border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;background:var(--surface)}
+.acc+.acc{margin-top:10px}
+.acc summary{list-style:none;cursor:pointer;padding:15px 18px;font-weight:700;color:var(--text);display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:15px}
+.acc summary::-webkit-details-marker{display:none}
+.acc summary .chev{transition:transform .2s;color:var(--muted)}
+.acc[open] summary .chev{transform:rotate(-180deg)}
+.acc summary:hover{background:var(--bg-soft)}
+.acc .body{padding:0 18px 16px;color:var(--text-2)}
+.acc .body p{margin:0}
+
+/* Footer */
+.foot{border-top:1px solid var(--border);background:var(--bg-soft);margin-top:50px}
+.foot-in{max-width:1240px;margin:0 auto;padding:30px clamp(20px,5vw,64px);display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between;color:var(--muted);font-size:13.5px}
+.foot a{font-weight:600}
+.foot .l{display:flex;align-items:center;gap:10px}
+.foot .l:first-child{direction:ltr}
+
+/* Mobile drawer */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:55;opacity:0;visibility:hidden;transition:opacity .2s}
+body.nav-open .overlay{opacity:1;visibility:visible}
+
+.codeblock pre,.tablewrap{-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+.sidebar{-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+
+@media (max-width:980px){
+  .shell{grid-template-columns:1fr}
+  #menuBtn{display:grid}
+  .brand .sub{display:none}
+  .brand-pill{height:30px}
+  .logo{width:30px;height:30px}
+  .sidebar{
+    position:fixed;top:var(--topbar-h);right:0;left:auto;height:calc(100dvh - var(--topbar-h));width:min(290px,84vw);
+    max-width:100vw;z-index:58;background:var(--surface);margin:0;
+    border-inline-end:none;border-left:1px solid var(--border);box-shadow:-20px 0 40px -20px rgba(0,0,0,.4);
+    transform:translateX(100%);transition:transform .24s ease;padding:24px 22px 60px;overflow-y:auto;
+  }
+  body.nav-open .sidebar{transform:translateX(0)}
+  body.nav-open{overflow:hidden}
+  .nav-link.active::before{display:none}
+  .content{padding-inline:20px}
+  .content section+section{margin-top:44px;padding-top:32px}
+}
+@media (max-width:640px){
+  body{font-size:15px;line-height:1.75}
+  .brand-pill{height:28px}
+  .logo{width:28px;height:28px;border-radius:50%}
+  .hero-inner{padding-inline:18px}
+  h1.title{font-size:clamp(2.2rem,13vw,3.4rem)}
+  .lede{font-size:1rem;max-width:100%}
+  .badges{gap:7px}
+  .btn{padding:11px 18px;font-size:14px}
+  .content h2{font-size:1.4rem;gap:9px}
+  .content h2 .hi{width:30px;height:30px}
+  .content h3{font-size:1.05rem;margin:26px 0 10px}
+  .lead-p{font-size:1rem}
+  .callout{padding:12px 14px}
+  .steps>li{padding-inline-start:44px;margin-inline-start:10px}
+  .steps>li::before{width:28px;height:28px;font-size:12.5px;inset-inline-start:-15px}
+  .grid-cards{grid-template-columns:repeat(2,1fr);gap:10px}
+  .card{padding:12px 11px}
+  .card .ico{width:30px;height:30px;font-size:15px;margin-bottom:8px;border-radius:8px}
+  .card h4{font-size:13px;line-height:1.4}
+  .card p{font-size:12px;line-height:1.55}
+  #panels .tablewrap{overflow:visible;border:none;box-shadow:none}
+  #panels table{display:block;min-width:0}
+  #panels thead{display:none}
+  #panels tbody{display:flex;flex-direction:column;gap:10px}
+  #panels tr{display:flex;flex-direction:column;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);padding:12px 13px 16px;box-shadow:var(--shadow)}
+  #panels td{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:7px 0;border-bottom:1px dashed var(--border);font-size:13px;text-align:start}
+  #panels td:last-child{border-bottom:none;padding-bottom:2px}
+  #panels td::before{content:attr(data-label);font-size:11.5px;font-weight:700;color:var(--muted);flex:0 0 auto}
+  #panels td[data-label="پنل"]{font-weight:800;color:var(--text);font-size:14.5px;order:-2;border-bottom:1px solid var(--border-strong);padding-bottom:9px;margin-bottom:2px}
+  #panels td[data-label="پنل"]::before{display:none}
+  #panels td[data-label="نسخه"]{order:-1;border-bottom:1px dashed var(--border)}
+  #panels td[data-label="نکات"]{display:block;direction:rtl;text-align:right;unicode-bidi:embed;line-height:1.75;padding-top:9px}
+  #panels td[data-label="نکات"]::before{display:block;margin-bottom:5px}
+  #panels td[data-label="شناسهٔ داخلی"] code,#panels td[data-label="نکات"] code{direction:ltr;unicode-bidi:embed;display:inline-block}
+  table{min-width:480px}
+  .codeblock .cap{padding:7px 12px;font-size:11.5px}
+  .codeblock pre{padding:12px}
+  .codeblock code{font-size:12.5px}
+}
+@media (max-width:420px){
+  .content{padding-inline:14px}
+  .content h2{font-size:1.22rem}
+  .brand b{font-size:16px}
+  .brand-pill{height:25px}
+  .logo{width:25px;height:25px;border-radius:50%}
+  .iconbtn{width:34px;height:34px}
+  .eyebrow{font-size:12px;padding:5px 12px}
+  .grid-cards{gap:8px}
+  .card{padding:10px 9px}
+  .card .ico{width:26px;height:26px;font-size:13px;margin-bottom:6px}
+  .card h4{font-size:12px}
+  .card p{font-size:11px}
+  table{min-width:420px;font-size:13px}
+  thead th,tbody td{padding:9px 10px}
+  .callout .ct{font-size:14px}
+}
+@media (max-width:340px){
+  .grid-cards{grid-template-columns:1fr}
+}
+@media (max-width:900px) and (orientation:landscape) and (max-height:500px){
+  .brand-pill{height:30px}
+  .logo{width:30px;height:30px}
+  .hero-inner{padding-block:32px}
+  .sidebar{padding-top:14px}
+  .content{padding-block:20px}
+  .content section+section{margin-top:32px;padding-top:24px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{scroll-behavior:auto !important;transition:none !important;animation:none !important}
+}
+/* load reveal */
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.reveal{animation:rise .6s cubic-bezier(.2,.7,.2,1) both}
+.reveal.d1{animation-delay:.06s}
+.reveal.d2{animation-delay:.12s}
+.reveal.d3{animation-delay:.18s}
+.reveal.d4{animation-delay:.24s}
+</style>
+<style id="fx-edit-overrides">
+/* generated by /edit — visual overrides */
+#intro > h2 > span.hi > svg.icon {
+    fill: none;
+    stroke: currentColor;
+}
+
+#sidebar > nav > div.nav-group:nth-of-type(1) > a.nav-link.active > svg.icon {
+    fill: none;
+    stroke: currentColor;
+}
+
+#top > section.hero > div.hero-inner:nth-of-type(2) > div.cta-row.reveal:nth-of-type(1) > a.btn.btn-ghost:nth-of-type(2) > svg.icon {
+    fill: currentColor;
+    stroke: none;
+}
+
+#prerequisites > h2 > span.hi > svg.icon {
+    fill: currentColor;
+    stroke: none;
+}
+
+#sidebar > nav > div.nav-group:nth-of-type(2) > a.nav-link:nth-of-type(1) > svg.icon {
+    fill: currentColor;
+    stroke: none;
+}
+</style></head>
+<body>
+
+<header class="topbar">
+  <div class="bar-actions">
+    <a class="iconbtn" id="ghBtn" href="https://github.com/Mmd-Amir/Faoxima" target="_blank" rel="noopener" aria-label="گیت‌هاب">
+      <svg class="icon" viewBox="0 0 20 20" stroke-width="0" fill="currentColor" style="fill: currentcolor; stroke: none;"><g stroke-width="0"></g><g stroke-linecap="round" stroke-linejoin="round"></g><g>   <defs> </defs> <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g transform="translate(-140.000000, -7559.000000)" fill="currentColor"> <g transform="translate(56.000000, 160.000000)"> <path d="M94,7399 C99.523,7399 104,7403.59 104,7409.253 C104,7413.782 101.138,7417.624 97.167,7418.981 C96.66,7419.082 96.48,7418.762 96.48,7418.489 C96.48,7418.151 96.492,7417.047 96.492,7415.675 C96.492,7414.719 96.172,7414.095 95.813,7413.777 C98.04,7413.523 100.38,7412.656 100.38,7408.718 C100.38,7407.598 99.992,7406.684 99.35,7405.966 C99.454,7405.707 99.797,7404.664 99.252,7403.252 C99.252,7403.252 98.414,7402.977 96.505,7404.303 C95.706,7404.076 94.85,7403.962 94,7403.958 C93.15,7403.962 92.295,7404.076 91.497,7404.303 C89.586,7402.977 88.746,7403.252 88.746,7403.252 C88.203,7404.664 88.546,7405.707 88.649,7405.966 C88.01,7406.684 87.619,7407.598 87.619,7408.718 C87.619,7412.646 89.954,7413.526 92.175,7413.785 C91.889,7414.041 91.63,7414.493 91.54,7415.156 C90.97,7415.418 89.522,7415.871 88.63,7414.304 C88.63,7414.304 88.101,7413.319 87.097,7413.247 C87.097,7413.247 86.122,7413.234 87.029,7413.87 C87.029,7413.87 87.684,7414.185 88.139,7415.37 C88.139,7415.37 88.726,7417.2 91.508,7416.58 C91.513,7417.437 91.522,7418.245 91.522,7418.489 C91.522,7418.76 91.338,7419.077 90.839,7418.982 C86.865,7417.627 84,7413.783 84,7409.253 C84,7403.59 88.478,7399 94,7399"> </path> </g> </g> </g> </g></svg>
+    </a>
+    <button class="iconbtn" id="themeBtn" aria-label="تغییر حالت روشن و تاریک">
+      <svg class="icon sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+      <svg class="icon moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
+    </button>
+    <button class="iconbtn" id="menuBtn" aria-label="باز کردن منو" aria-expanded="false">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"></path></svg>
+    </button>
+  </div>
+  <a class="brand" href="#top" aria-label="faoxima">
+    <span class="brand-pill">
+      <span class="logo"><img src="./faoxima.jpg" alt="faoxima"></span>
+      <b>faoxima</b>
+    </span>
+  </a>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="grid" aria-hidden="true"></div>
+    <div class="hero-inner">
+      <span class="eyebrow reveal"><span class="dot"></span>ربات فروش و مدیریت نمایندگی VPN</span>
+      <h1 class="title reveal d1">faoxima</h1>
+      <p class="lede reveal d2">یک ربات تلگرامی حرفه‌ای برای فروش و مدیریت کاملاً خودکار روی چند پنل مختلف — ریفکتورشده از سورس متن‌باز <strong>میرزا</strong>.</p>
+      <div class="cta-row reveal d3">
+        <a class="btn btn-primary" href="#intro">شروع
+          <svg class="icon" viewBox="0 0 24 24"><path d="M13 5l-7 7 7 7M19 12H6"></path></svg>
+        </a>
+        <a class="btn btn-ghost" href="https://github.com/Mmd-Amir/Faoxima" target="_blank" rel="noopener">گیت‌هاب
+          <svg class="icon" viewBox="0 0 20 20" style="fill: currentcolor; stroke: none;"><g stroke-width="0"></g><g stroke-linecap="round" stroke-linejoin="round"></g><g>   <defs> </defs> <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g transform="translate(-140.000000, -7559.000000)" fill="currentColor"> <g transform="translate(56.000000, 160.000000)"> <path d="M94,7399 C99.523,7399 104,7403.59 104,7409.253 C104,7413.782 101.138,7417.624 97.167,7418.981 C96.66,7419.082 96.48,7418.762 96.48,7418.489 C96.48,7418.151 96.492,7417.047 96.492,7415.675 C96.492,7414.719 96.172,7414.095 95.813,7413.777 C98.04,7413.523 100.38,7412.656 100.38,7408.718 C100.38,7407.598 99.992,7406.684 99.35,7405.966 C99.454,7405.707 99.797,7404.664 99.252,7403.252 C99.252,7403.252 98.414,7402.977 96.505,7404.303 C95.706,7404.076 94.85,7403.962 94,7403.958 C93.15,7403.962 92.295,7404.076 91.497,7404.303 C89.586,7402.977 88.746,7403.252 88.746,7403.252 C88.203,7404.664 88.546,7405.707 88.649,7405.966 C88.01,7406.684 87.619,7407.598 87.619,7408.718 C87.619,7412.646 89.954,7413.526 92.175,7413.785 C91.889,7414.041 91.63,7414.493 91.54,7415.156 C90.97,7415.418 89.522,7415.871 88.63,7414.304 C88.63,7414.304 88.101,7413.319 87.097,7413.247 C87.097,7413.247 86.122,7413.234 87.029,7413.87 C87.029,7413.87 87.684,7414.185 88.139,7415.37 C88.139,7415.37 88.726,7417.2 91.508,7416.58 C91.513,7417.437 91.522,7418.245 91.522,7418.489 C91.522,7418.76 91.338,7419.077 90.839,7418.982 C86.865,7417.627 84,7413.783 84,7409.253 C84,7403.59 88.478,7399 94,7399"> </path> </g> </g> </g> </g></svg>
+        </a>
+        <a class="btn btn-ghost btn-telegram" href="https://t.me/faoxima" target="_blank" rel="noopener">کانال تلگرام
+          <svg class="icon" viewBox="0 0 240 240"><circle cx="120" cy="120" r="120" fill="#29a9eb"></circle><path fill="#fff" d="M98 175c-4 0-3.4-1.5-4.8-5.3L82 132.2l88-52" ></path><path fill="#fff" d="M98 175c3 0 4.4-1.4 6.2-3.1l16.7-16.2-20.8-12.6" opacity=".7"></path><path fill="#fff" d="M100.1 143.1l50.3 37.2c5.8 3.2 9.9 1.5 11.4-5.4l20.6-97.2c2.1-8.4-3.2-12.2-8.8-9.6l-121 46.7c-8.2 3.2-8.2 7.7-1.5 9.7l31 9.7 71.6-45.1c3.4-2 6.5-1 4 3.2z"></path></svg>
+        </a>
+      </div>
+      <div class="badges reveal d4">
+        <span class="badge b-license"><span class="k">License</span><span class="v">GPL-3.0</span></span>
+        <span class="badge b-php"><span class="k">PHP</span><span class="v">8.2 — 8.3</span></span>
+        <span class="badge b-tg"><span class="k">Telegram</span><span class="v">Bot API</span></span>
+        <span class="badge b-app"><span class="k">Mini App</span><span class="v">v1.0.0</span></span>
+        <span class="badge b-bot"><span class="k">Bot</span><span class="v">v1.0.0</span></span>
+        <span class="badge b-base"><span class="k">Based on</span><span class="v">Mirza</span></span>
+      </div>
+    </div>
+  </section>
+
+  <div class="shell">
+
+    <aside class="sidebar" id="sidebar">
+      <nav aria-label="فهرست مستندات">
+        <div class="nav-group">
+          <div class="gt">معرفی</div>
+          <a class="nav-link active" href="#intro"><svg class="icon" viewBox="0 0 16 16" style="fill: none; stroke: currentcolor;"><g stroke-width="0"></g><g stroke-linecap="round" stroke-linejoin="round"></g><g> <rect height="7.5" width="12.5" y="5.75" x="1.75"></rect> <path d="m10.75 8.75v1.5m-5.5-1.5v1.5m-.5-7.5 3.25 3 3.25-3"></path> </g></svg>معرفی faoxima</a>
+        </div>
+        <div class="nav-group">
+          <div class="gt">راه‌اندازی</div>
+          <a class="nav-link" href="#prerequisites"><svg class="icon" viewBox="0 0 24 24"><g stroke-width="0"></g><g stroke-linecap="round" stroke-linejoin="round"></g><g> <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->   <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g fill="currentColor" fill-rule="nonzero"> <path d="M17.5,12 C17.7930736,12 18.0806075,12.024542 18.3607867,12.0717481 L18.5341163,12.7877987 C18.7930873,13.8615807 19.8734971,14.5221156 20.9472791,14.2631446 L21.0450624,14.2369258 L21.6461665,14.0580331 C22.0087308,14.5250263 22.2991223,15.0545692 22.4998264,15.6285394 L22.0525916,16.0588054 C21.2985339,16.7843546 21.2369524,17.9588704 21.8837443,18.7572658 L22.0250857,18.9142136 L22.4998264,19.3714606 C22.2992653,19.9450217 22.0091447,20.4742188 21.6469416,20.9409683 L21.0450624,20.7630742 C19.9857606,20.4500989 18.8733103,21.0551161 18.5603351,22.1144179 L18.5341163,22.2122013 L18.3607867,22.9282519 C18.0806075,22.975458 17.7930736,23 17.5,23 C17.2066096,23 16.918771,22.9754049 16.6383049,22.9280988 L16.4658837,22.2122013 C16.2069127,21.1384193 15.1265029,20.4778844 14.0527209,20.7368554 L13.9549376,20.7630742 L13.3530584,20.9409683 C12.9908553,20.4742188 12.7007347,19.9450217 12.5001736,19.3714606 L12.9474084,18.9411946 C13.7014661,18.2156454 13.7630476,17.0411296 13.1162557,16.2427342 L12.9749143,16.0857864 L12.5001736,15.6285394 C12.7007347,15.0549783 12.9908553,14.5257812 13.3530584,14.0590317 L13.9549376,14.2369258 C15.0142394,14.5499011 16.1266897,13.9448839 16.4396649,12.8855821 L16.4658837,12.7877987 L16.6383049,12.0719012 C16.918771,12.0245951 17.2066096,12 17.5,12 Z M13.75,2 C14.9926407,2 16,3.00735931 16,4.25 L16.0001627,11.1738934 C15.4723044,11.2985682 14.969311,11.4876006 14.4999221,11.7322512 L14.5,4.25 C14.5,3.83578644 14.1642136,3.5 13.75,3.5 L6.25,3.5 C5.83578644,3.5 5.5,3.83578644 5.5,4.25 L5.5,19.75 C5.5,20.1642136 5.83578644,20.5 6.25,20.5 L11.7327703,20.5010736 C12.0200482,21.0520148 12.3839565,21.5566422 12.8103588,22.0008195 L6.25,22 C5.00735931,22 4,20.9926407 4,19.75 L4,4.25 C4,3.00735931 5.00735931,2 6.25,2 L13.75,2 Z M8.74887095,17.5037644 L10.9999992,17.4989995 C10.9999992,18.0162111 11.0601751,18.5183676 11.1738934,18.9998373 L8.75112905,19.0037644 C8.33691596,19.0043862 8.00062441,18.6691057 7.99999915,18.2548926 C7.99937729,17.8406795 8.33465786,17.5043879 8.74887095,17.5037644 Z M17.5,16 C16.6993682,16 16.0503279,16.6715729 16.0503279,17.5 C16.0503279,18.3284271 16.6993682,19 17.5,19 C18.3006318,19 18.9496721,18.3284271 18.9496721,17.5 C18.9496721,16.6715729 18.3006318,16 17.5,16 Z"> </path> </g> </g> </g></svg>پیش‌نیازها</a>
+        </div>
+        <div class="nav-group">
+          <div class="gt">آموزش</div>
+          <a class="nav-link" href="install.html"><svg class="icon" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"></path></svg>نصب و راه‌اندازی</a>
+          <a class="nav-link" href="migrate.html"><svg class="icon" viewBox="0 0 32 32" style="fill:currentColor;stroke:none"><g transform="translate(-300,-436)"><path d="m 307,458.01367 a 1,1 0 0 0 -1,1 1,1 0 0 0 1,1 h 4 a 1,1 0 0 0 1,-1 1,1 0 0 0 -1,-1 z"></path><path d="m 323,455.01367 a 1,1 0 0 0 -0.0508,0.006 1.0001,1.0001 0 0 0 -0.11914,0.0137 1,1 0 0 0 -0.10547,0.0254 1.0001,1.0001 0 0 0 -0.10352,0.0352 1,1 0 0 0 -0.10547,0.0508 1.0001,1.0001 0 0 0 -0.0898,0.0566 1,1 0 0 0 -0.0859,0.0684 1.0001,1.0001 0 0 0 -0.0469,0.0371 l -2,2 a 1,1 0 0 0 0,1.41406 1,1 0 0 0 1.41406,0 L 322,458.42773 v 3.58594 a 1,1 0 0 0 1,1 1,1 0 0 0 1,-1 v -3.58594 l 0.29297,0.29297 a 1,1 0 0 0 1.41406,0 1,1 0 0 0 0,-1.41406 l -1.9707,-1.9707 a 1,1 0 0 0 -0.40625,-0.26563 1.0001,1.0001 0 0 0 -0.002,0 1.0001,1.0001 0 0 0 -0.004,-0.002 1,1 0 0 0 -0.19922,-0.0449 1.0001,1.0001 0 0 0 -0.0273,-0.004 1,1 0 0 0 -0.0977,-0.006 z"></path><path d="m 307,450.01367 a 1,1 0 0 0 -1,1 1,1 0 0 0 1,1 h 4 a 1,1 0 0 0 1,-1 1,1 0 0 0 -1,-1 z"></path><path d="m 307,442.01367 a 1,1 0 0 0 -1,1 1,1 0 0 0 1,1 h 4 a 1,1 0 0 0 1,-1 1,1 0 0 0 -1,-1 z"></path><path d="m 305,438.01367 c -1.6447,0 -3,1.3553 -3,3 v 4 c 0,0.76628 0.29675,1.46716 0.77734,2 -0.48059,0.53284 -0.77734,1.23372 -0.77734,2 v 4 c 0,0.76628 0.29675,1.46716 0.77734,2 -0.48059,0.53284 -0.77734,1.23372 -0.77734,2 v 4 c 0,1.6447 1.3553,3 3,3 h 13.11133 c 1.26351,1.23579 2.98973,2 4.88867,2 3.85414,0 7,-3.14585 7,-7 0,-2.78161 -1.63913,-5.19487 -4,-6.32226 v -3.67774 c 0,-0.76628 -0.29675,-1.46716 -0.77734,-2 0.48059,-0.53284 0.77734,-1.23372 0.77734,-2 v -4 c 0,-1.6447 -1.3553,-3 -3,-3 z m 0,2 h 18 c 0.5713,0 1,0.42871 1,1 v 4 c 0,0.5713 -0.4287,1 -1,1 h -18 c -0.5713,0 -1,-0.4287 -1,-1 v -4 c 0,-0.57129 0.4287,-1 1,-1 z m 0,8 h 18 c 0.5713,0 1,0.42871 1,1 v 3.07227 c -0.32711,-0.0472 -0.66021,-0.0723 -1,-0.0723 -1.89894,0 -3.62516,0.76421 -4.88867,2 H 305 c -0.5713,0 -1,-0.4287 -1,-1 v -4 c 0,-0.57129 0.4287,-1 1,-1 z m 18,6 c 2.77327,0 5,2.22674 5,5 0,2.77327 -2.22673,5 -5,5 -1.44074,0 -2.73243,-0.602 -3.64258,-1.56836 a 1,1 0 0 0 -0.16797,-0.18554 C 318.44728,461.38795 318,460.25556 318,459.01367 c 0,-1.25636 0.45901,-2.39958 1.2168,-3.27539 a 1,1 0 0 0 0.0645,-0.0762 c 0.91337,-1.01394 2.23794,-1.64844 3.71875,-1.64844 z m -18,2 h 11.67773 c -0.43469,0.9103 -0.67773,1.92747 -0.67773,3 0,1.07253 0.24304,2.0897 0.67773,3 H 305 c -0.5713,0 -1,-0.4287 -1,-1 v -4 c 0,-0.57129 0.4287,-1 1,-1 z"></path></g></svg>مهاجرت از میرزا</a>
+        </div>
+        <div class="nav-group">
+          <div class="gt">امکانات</div>
+          <a class="nav-link" href="#features"><svg class="icon" viewBox="0 0 24 24"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"></path></svg>امکانات و مزایا</a>
+        </div>
+        <div class="nav-group">
+          <div class="gt">مرجع</div>
+          <a class="nav-link" href="#panels"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="6" rx="1.5"></rect><rect x="3" y="14" width="18" height="6" rx="1.5"></rect><path d="M7 7h.01M7 17h.01"></path></svg>پنل‌های پشتیبانی‌شده</a>
+          <a class="nav-link" href="errors.html"><svg class="icon" viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"></path></svg>مرجع خطاها</a>
+          <a class="nav-link" href="#faq"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M9.5 9a2.5 2.5 0 0 1 4.4 1.6c0 1.6-2.4 2.1-2.4 3.4M12 17h.01"></path></svg>سوالات متداول</a>
+        </div>
+      </nav>
+    </aside>
+
+    <article class="content">
+
+      <section id="intro">
+        <div class="kicker">معرفی</div>
+        <h2><span class="hi"><svg class="icon" viewBox="0 0 16 16" style="fill: none; stroke: currentcolor;"><g stroke-width="0"></g><g stroke-linecap="round" stroke-linejoin="round"></g><g> <rect height="7.5" width="12.5" y="5.75" x="1.75"></rect> <path d="m10.75 8.75v1.5m-5.5-1.5v1.5m-.5-7.5 3.25 3 3.25-3"></path> </g></svg></span>معرفی faoxima</h2>
+        <p class="lead-p">faoxima یک ربات تلگرامی حرفه‌ای برای فروش و مدیریت خودکار اشتراک VPN/پروکسی است که به‌طور اختصاصی برای فروشندگان (ادمین‌های NonSudo) روی پنل‌های مختلف VPN طراحی شده است.</p>
+        <p>faoxima از سه بخش تشکیل شده که روی یک پایگاه‌دادهٔ مشترک کار می‌کنند: <strong>ربات تلگرام</strong> برای تعامل با مشتری و فروش سرویس، <strong>مینی‌اپ تلگرام (SPA)</strong> برای تجربهٔ خرید، تمدید و مدیریت شبیه یک اپلیکیشن مستقل، و <strong>پنل وب ادمین</strong> برای مدیریت کامل فروش، پنل‌های متصل و کاربران. این سه بخش با هم به شما امکان می‌دهند فرآیند فروش سرویس، رصد لحظه‌ای مصرف و کنترل کامل دسترسی‌ها را کاملاً خودکار انجام دهید.</p>
+        <p>روند معمول استفاده از دید مشتری این‌گونه است: ابتدا کیف‌پول خود را شارژ می‌کند، سپس از موجودی برای خرید سرویس استفاده می‌کند؛ faoxima به‌صورت خودکار روی پنل بالادستی متصل‌شده یک اکانت می‌سازد (یا در صورت وجود، از انبار از‌پیش‌ساخته برمی‌دارد) و بلافاصله لینک اشتراک و QR سرویس را تحویل می‌دهد. پیش از شروع نصب و راه‌اندازی، پیش‌نیازهای سرور و PHP را در بخش <a href="#prerequisites">پیش‌نیازها</a> بررسی کنید.</p>
+        <p>این پروژه بازطراحی کامل و بهینه‌سازی‌شده‌ای از ربات متن‌باز <strong>میرزا</strong> است و با هدف ارتقای تجربهٔ کاربری و افزایش کارایی توسعه داده می‌شود.</p>
+        <div class="callout note">
+          <div class="ct"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 8h.01M11 12h1v4h1"></path></svg>نکته</div>
+          <p>faoxima کاملاً <strong>رایگان و متن‌باز</strong> (تحت لایسنس GPL-3.0) است. هرگونه فروش یا دریافت وجه بابت خودِ این ربات تخلف محسوب می‌شود.</p>
+        </div>
+        <div class="callout warn">
+          <div class="ct"><svg class="icon" viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"></path></svg>هشدار</div>
+          <p>بخش نمایندگی (reseller) در حال حاضر <strong>غیرفعال</strong> است و هنوز در دست توسعه قرار دارد.</p>
+        </div>
+      </section>
+
+      <section id="prerequisites">
+        <div class="kicker">راه‌اندازی</div>
+        <h2><span class="hi"><svg class="icon" viewBox="0 0 24 24"><g stroke-width="0"></g><g stroke-linecap="round" stroke-linejoin="round"></g><g> <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->   <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g fill="currentColor" fill-rule="nonzero"> <path d="M17.5,12 C17.7930736,12 18.0806075,12.024542 18.3607867,12.0717481 L18.5341163,12.7877987 C18.7930873,13.8615807 19.8734971,14.5221156 20.9472791,14.2631446 L21.0450624,14.2369258 L21.6461665,14.0580331 C22.0087308,14.5250263 22.2991223,15.0545692 22.4998264,15.6285394 L22.0525916,16.0588054 C21.2985339,16.7843546 21.2369524,17.9588704 21.8837443,18.7572658 L22.0250857,18.9142136 L22.4998264,19.3714606 C22.2992653,19.9450217 22.0091447,20.4742188 21.6469416,20.9409683 L21.0450624,20.7630742 C19.9857606,20.4500989 18.8733103,21.0551161 18.5603351,22.1144179 L18.5341163,22.2122013 L18.3607867,22.9282519 C18.0806075,22.975458 17.7930736,23 17.5,23 C17.2066096,23 16.918771,22.9754049 16.6383049,22.9280988 L16.4658837,22.2122013 C16.2069127,21.1384193 15.1265029,20.4778844 14.0527209,20.7368554 L13.9549376,20.7630742 L13.3530584,20.9409683 C12.9908553,20.4742188 12.7007347,19.9450217 12.5001736,19.3714606 L12.9474084,18.9411946 C13.7014661,18.2156454 13.7630476,17.0411296 13.1162557,16.2427342 L12.9749143,16.0857864 L12.5001736,15.6285394 C12.7007347,15.0549783 12.9908553,14.5257812 13.3530584,14.0590317 L13.9549376,14.2369258 C15.0142394,14.5499011 16.1266897,13.9448839 16.4396649,12.8855821 L16.4658837,12.7877987 L16.6383049,12.0719012 C16.918771,12.0245951 17.2066096,12 17.5,12 Z M13.75,2 C14.9926407,2 16,3.00735931 16,4.25 L16.0001627,11.1738934 C15.4723044,11.2985682 14.969311,11.4876006 14.4999221,11.7322512 L14.5,4.25 C14.5,3.83578644 14.1642136,3.5 13.75,3.5 L6.25,3.5 C5.83578644,3.5 5.5,3.83578644 5.5,4.25 L5.5,19.75 C5.5,20.1642136 5.83578644,20.5 6.25,20.5 L11.7327703,20.5010736 C12.0200482,21.0520148 12.3839565,21.5566422 12.8103588,22.0008195 L6.25,22 C5.00735931,22 4,20.9926407 4,19.75 L4,4.25 C4,3.00735931 5.00735931,2 6.25,2 L13.75,2 Z M8.74887095,17.5037644 L10.9999992,17.4989995 C10.9999992,18.0162111 11.0601751,18.5183676 11.1738934,18.9998373 L8.75112905,19.0037644 C8.33691596,19.0043862 8.00062441,18.6691057 7.99999915,18.2548926 C7.99937729,17.8406795 8.33465786,17.5043879 8.74887095,17.5037644 Z M17.5,16 C16.6993682,16 16.0503279,16.6715729 16.0503279,17.5 C16.0503279,18.3284271 16.6993682,19 17.5,19 C18.3006318,19 18.9496721,18.3284271 18.9496721,17.5 C18.9496721,16.6715729 18.3006318,16 17.5,16 Z"> </path> </g> </g> </g></svg></span>پیش‌نیازها</h2>
+        <p>پیش از نصب، موارد زیر را آماده کنید:</p>
+        <ul>
+          <li><strong>سرور یا هاست:</strong> سرور لینوکس <code class="inl">Ubuntu 22+</code> (روش VPS) یا هاست <code class="inl">cPanel</code>/<code class="inl">aaPanel</code>.</li>
+          <li><strong>PHP 8.2 یا 8.3</strong> به‌همراه اکستنشن‌های <code class="inl">gd</code>، <code class="inl">intl</code>، <code class="inl">zip</code> و <code class="inl">sodium</code>.</li>
+          <li><strong>پایگاه‌داده:</strong> <code class="inl">MySQL</code> یا <code class="inl">MariaDB</code>.</li>
+          <li><strong>دامنه + گواهی SSL</strong> (اتصال باید روی <code class="inl">https</code> باشد).</li>
+          <li><strong>کرون‌جاب (اجباری)</strong> برای اجرای وظایف زمان‌بندی‌شده.</li>
+          <li><strong>توکن ربات</strong> از <a href="https://t.me/BotFather" target="_blank" rel="noopener">@BotFather</a>.</li>
+        </ul>
+        <div class="callout warn">
+          <div class="ct"><svg class="icon" viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"></path></svg>هشدار</div>
+          <p>بدون تنظیم کرون‌جاب، تمدید خودکار، یادآوری‌ها و گزارش‌های زمان‌بندی‌شده کار نخواهند کرد.</p>
+        </div>
+      </section>
+
+      <section id="features">
+        <div class="kicker">امکانات</div>
+        <h2><span class="hi"><svg class="icon" viewBox="0 0 24 24"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"></path></svg></span>امکانات و مزایا</h2>
+        <p>مهم‌ترین قابلیت‌های faoxima:</p>
+        <div class="grid-cards">
+          <div class="card"><div class="ico"><svg class="icon" viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/></svg></div><h4>مینی‌اپ تلگرام</h4><p>تجربهٔ خرید، تمدید و مدیریت سرویس به‌صورت اپلیکیشن (SPA) داخل تلگرام.</p></div>
+          <div class="card"><div class="ico"><svg class="icon" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></div><h4>درگاه‌های پرداخت متعدد</h4><p>زرین‌پال، ترونادو، تون‌پی، کیوب‌پی، بلوپال، NowPayments و Plisio (کریپتو).</p></div>
+          <div class="card"><div class="ico"><svg class="icon" viewBox="0 0 16 16" style="fill:currentColor;stroke:none"><path d="M10.09 4.37a.62.62 0 0 0-.85.23l-3.57 6.18a.62.62 0 0 0 .23.85.55.55 0 0 0 .31.08.63.63 0 0 0 .54-.31l3.57-6.18a.61.61 0 0 0-.23-.85zM7.35 6.43a2.16 2.16 0 0 0-2.06-2.24 2.17 2.17 0 0 0-2.07 2.24 2.17 2.17 0 0 0 2.07 2.25 2.16 2.16 0 0 0 2.06-2.25zm-2.06 1a.93.93 0 0 1-.82-1 .92.92 0 0 1 .82-1 .91.91 0 0 1 .81 1 .92.92 0 0 1-.81 1zm5.42-.11a2.16 2.16 0 0 0-2.06 2.24 2.16 2.16 0 0 0 2.06 2.25 2.17 2.17 0 0 0 2.07-2.25 2.17 2.17 0 0 0-2.07-2.24zm0 3.24a.92.92 0 0 1-.81-1 .92.92 0 0 1 .81-1 .92.92 0 0 1 .82 1 .93.93 0 0 1-.82 1z"/><path d="M8 .5A7.76 7.76 0 0 0 0 8a7.76 7.76 0 0 0 8 7.5A7.76 7.76 0 0 0 16 8 7.76 7.76 0 0 0 8 .5zm0 13.75A6.52 6.52 0 0 1 1.25 8 6.52 6.52 0 0 1 8 1.75 6.52 6.52 0 0 1 14.75 8 6.52 6.52 0 0 1 8 14.25z"/></svg></div><h4>کد تخفیف و هدیه</h4><p>تعریف کد تخفیف و کد هدیه برای کاربران و نمایندگان.</p></div>
+          <div class="card"><div class="ico"><svg class="icon" viewBox="0 0 512 512" style="fill:currentColor;stroke:none"><path d="M379.734355,174.506667 C373.121022,106.666667 333.014355,-2.13162821e-14 209.067688,-2.13162821e-14 C85.1210217,-2.13162821e-14 45.014355,106.666667 38.4010217,174.506667 C15.2012632,183.311569 -0.101643453,205.585799 0.000508304259,230.4 L0.000508304259,260.266667 C0.000508304259,293.256475 26.7445463,320 59.734355,320 C92.7241638,320 119.467688,293.256475 119.467688,260.266667 L119.467688,230.4 C119.360431,206.121456 104.619564,184.304973 82.134355,175.146667 C86.4010217,135.893333 107.307688,42.6666667 209.067688,42.6666667 C310.827688,42.6666667 331.521022,135.893333 335.787688,175.146667 C313.347976,184.324806 298.68156,206.155851 298.667688,230.4 L298.667688,260.266667 C298.760356,283.199651 311.928618,304.070103 332.587688,314.026667 C323.627688,330.88 300.801022,353.706667 244.694355,360.533333 C233.478863,343.50282 211.780225,336.789048 192.906491,344.509658 C174.032757,352.230268 163.260418,372.226826 167.196286,392.235189 C171.132153,412.243552 188.675885,426.666667 209.067688,426.666667 C225.181549,426.577424 239.870491,417.417465 247.041022,402.986667 C338.561022,392.533333 367.787688,345.386667 376.961022,317.653333 C401.778455,309.61433 418.468885,286.351502 418.134355,260.266667 L418.134355,230.4 C418.23702,205.585799 402.934114,183.311569 379.734355,174.506667 Z M76.8010217,260.266667 C76.8010217,269.692326 69.1600148,277.333333 59.734355,277.333333 C50.3086953,277.333333 42.6676884,269.692326 42.6676884,260.266667 L42.6676884,230.4 C42.6676884,224.302667 45.9205765,218.668499 51.2010216,215.619833 C56.4814667,212.571166 62.9872434,212.571166 68.2676885,215.619833 C73.5481336,218.668499 76.8010217,224.302667 76.8010217,230.4 L76.8010217,260.266667 Z M341.334355,230.4 C341.334355,220.97434 348.975362,213.333333 358.401022,213.333333 C367.826681,213.333333 375.467688,220.97434 375.467688,230.4 L375.467688,260.266667 C375.467688,269.692326 367.826681,277.333333 358.401022,277.333333 C348.975362,277.333333 341.334355,269.692326 341.334355,260.266667 L341.334355,230.4 Z" transform="translate(42.666667, 42.666667)"/></svg></div><h4>تیکت و پشتیبانی</h4><p>سیستم تیکتینگ با دپارتمان‌های قابل تعریف.</p></div>
+          <div class="card"><div class="ico"><svg class="icon" viewBox="0 0 24 24"><path d="M21 8L12 3 3 8l9 5 9-5z"/><path d="M3 8v8l9 5 9-5V8M12 13v8"/></svg></div><h4>انبارداری پیشرفته</h4><p>فروش دستی عمده، پنل اضطراری و انبار شبکهٔ ملی.</p></div>
+          <div class="card"><div class="ico"><svg class="icon" viewBox="0 0 24 24"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="19" cy="17" r="2.5"/><circle cx="6" cy="17" r="2.5"/><path d="M13.5 9v3.5m0 0-4 3.5m4-3.5 4 3.5"/></svg></div><h4>رنگ‌بندی دکمه‌ها</h4><p>رنگی‌کردن دکمه‌های ربات در سمت کاربر.</p></div>
+          <div class="card"><div class="ico"><svg class="icon" viewBox="0 0 24 24"><path d="M12 3l1.7 4.6L18 9l-4.3 1.4L12 15l-1.7-4.6L6 9l4.3-1.4z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg></div><h4>ایموجی پرمیوم</h4><p>اعمال ایموجی‌های اختصاصی (نیازمند اکانت پرمیوم مالک ربات).</p></div>
+          <div class="card"><div class="ico"><svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div><h4>پنل وب ادمین</h4><p>پنل وب بازطراحی‌شده با امکانات کامل مدیریت.</p></div>
+        </div>
+      </section>
+
+      <section id="panels">
+        <div class="kicker">مرجع</div>
+        <h2><span class="hi"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="6" rx="1.5"></rect><rect x="3" y="14" width="18" height="6" rx="1.5"></rect><path d="M7 7h.01M7 17h.01"></path></svg></span>پنل‌های پشتیبانی‌شده</h2>
+        <p>faoxima از پنل‌های زیر پشتیبانی می‌کند</p>
+        <div class="tablewrap">
+          <table>
+            <thead>
+              <tr><th>پنل</th><th>شناسهٔ داخلی</th><th>روش احراز هویت</th><th>نسخه</th><th>نکات</th></tr>
+            </thead>
+            <tbody>
+              <tr><td data-label="پنل">مرزبان (Marzban)</td><td data-label="شناسهٔ داخلی"><code>marzban</code></td><td data-label="روش احراز هویت">یوزرنیم/پسورد ادمین</td><td data-label="نسخه"><span class="tag-ok">Latest</span></td><td data-label="نکات">آدرس پنل باید بدون <code>/dashboard</code> ارسال شود <!-- TODO: نسخهٔ مرزبان --></td></tr>
+              <tr><td data-label="پنل">پاسارگارد (PasarGuard)</td><td data-label="شناسهٔ داخلی"><code>PasarGuard</code></td><td data-label="روش احراز هویت">توکن ثابت API</td><td data-label="نسخه"><span class="tag-ok">Latest</span></td><td data-label="نکات">آدرس پنل باید بدون <code>/dashboard</code> ارسال شود <!-- TODO: جزئیات و نسخهٔ پاسارگارد --></td></tr>
+              <tr><td data-label="پنل">ثنایی (3x-ui)</td><td data-label="شناسهٔ داخلی"><code>3x-ui</code></td><td data-label="روش احراز هویت">یوزر/پسورد + API</td><td data-label="نسخه"><span class="tag-ok">Latest</span></td><td data-label="نکات">نام کاربری کلاینت مشخص شود؛ دامنهٔ لینک ساب باید تنظیم شود <!-- TODO: نسخهٔ s-ui --></td></tr>
+              <tr><td data-label="پنل">Remnawave<span class="tag-new">جدید</span></td><td data-label="شناسهٔ داخلی"><code>remnawave</code></td><td data-label="روش احراز هویت">توکن ثابت API + شناسهٔ Squad</td><td data-label="نسخه"><span class="tag-ok">Latest</span></td><td data-label="نکات">بدون یوزر/پسورد؛ نیازمند آدرس و توکن API. آدرس پنل باید بدون <code>/dashboard</code> ارسال شود <!-- TODO: نسخهٔ Remnawave --></td></tr>
+              <tr><td data-label="پنل">Guard (GuardCore)</td><td data-label="شناسهٔ داخلی"><code>guard</code></td><td data-label="روش احراز هویت">کلید (key)</td><td data-label="نسخه"><span class="tag-ok">Latest</span></td><td data-label="نکات">نیازمند ستون‌های موردنیاز در دیتابیس <!-- TODO: جزئیات Guard --></td></tr>
+              <tr><td data-label="پنل">Rebecca<span class="tag-new">جدید</span></td><td data-label="شناسهٔ داخلی"><code>rebecca</code></td><td data-label="روش احراز هویت">توکن ثابت API</td><td data-label="نسخه"><span class="tag-ok">Latest</span></td><td data-label="نکات">آدرس پنل باید بدون <code>/dashboard</code> ارسال شود <!-- TODO: نسخهٔ Rebecca --></td></tr>
+              <tr><td data-label="پنل">فروش دستی (Manual)</td><td data-label="شناسهٔ داخلی"><code>Manualsale</code></td><td data-label="روش احراز هویت">—</td><td data-label="نسخه">—</td><td data-label="نکات">پنل واقعی نیست؛ مدیریت دستی انبار و فروش</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout note">
+          <div class="ct"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 8h.01M11 12h1v4h1"></path></svg>نکته</div>
+          <p>«شناسهٔ داخلی» همان مقداری است که ربات در پایگاه‌داده ذخیره می‌کند و معمولاً نیازی به دانستن آن ندارید؛ صرفاً برای رفع اشکال و توسعه مفید است.</p>
+        </div>
+      </section>
+
+      <section id="faq">
+        <div class="kicker">مرجع</div>
+        <h2><span class="hi"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M9.5 9a2.5 2.5 0 0 1 4.4 1.6c0 1.6-2.4 2.1-2.4 3.4M12 17h.01"></path></svg></span>سوالات متداول</h2>
+
+        <details class="acc">
+          <summary>faoxima رایگان است؟<svg class="icon chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg></summary>
+          <div class="body"><p>بله. faoxima کاملاً رایگان و متن‌باز (تحت لایسنس GPL-3.0) است و فروش آن تخلف محسوب می‌شود.</p></div>
+        </details>
+        <details class="acc">
+          <summary>روی چه سیستمی نصب می‌شود؟<svg class="icon chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg></summary>
+          <div class="body"><p>روی سرور Ubuntu با اسکریپت <code class="inl">install.sh</code>، یا روی هاست cPanel/aaPanel. مراحل کامل هر دو روش در بخش <a href="install.html">نصب و راه‌اندازی</a> توضیح داده شده است.</p></div>
+        </details>
+        <details class="acc">
+          <summary>چه نسخه‌ای از PHP لازم است؟<svg class="icon chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg></summary>
+          <div class="body"><p>PHP 8.2 یا 8.3 به‌همراه اکستنشن‌های gd، intl، zip و sodium. تنظیم کرون‌جاب نیز اجباری است.</p></div>
+        </details>
+        <details class="acc">
+          <summary>از چه پنل‌هایی پشتیبانی می‌کند؟<svg class="icon chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg></summary>
+          <div class="body"><p>پاسارگارد، 3x-ui، Remnawave، Guard و Rebecca — به‌علاوهٔ حالت فروش دستی. فهرست کامل در بخش <a href="#panels">پنل‌های پشتیبانی‌شده</a>.</p></div>
+        </details>
+        <details class="acc">
+          <summary>آیا می‌توانم نمایندگان فعلی پنلم را به faoxima وصل کنم؟<svg class="icon chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg></summary>
+          <div class="body"><p>بله. با افزودن پنل و تعریف ادمین NonSudo، می‌توانید فروش را از طریق پنل‌های موجودتان به ربات بسپارید. توجه کنید این موضوع با «سیستم نمایندگی داخلی» خودِ faoxima متفاوت است؛ آن بخش در حال حاضر غیرفعال و در دست توسعه است.</p></div>
+        </details>
+        <details class="acc">
+          <summary>تفاوت faoxima با میرزا چیست؟<svg class="icon chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg></summary>
+          <div class="body"><p>faoxima ریفکتور کامل میرزاست: بهینه‌سازی سرعت، مینی‌اپ بازطراحی‌شده، پنل وب جدید، پشتیبانی از Remnawave و درگاه‌های بیشتر، انبارداری پیشرفته، رنگ‌بندی دکمه‌ها و ایموجی پرمیوم.</p></div>
+        </details>
+        <details class="acc">
+          <summary>بعد از نصب، اولین اجرا با چه نکاتی همراه است؟<svg class="icon chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg></summary>
+          <div class="body"><p>مهم‌ترین نکته، تنظیم <strong>کرون‌جاب</strong> است؛ بدون آن، تمدید خودکار، یادآوری‌ها و گزارش‌های زمان‌بندی‌شده کار نمی‌کنند (به بخش <a href="#prerequisites">پیش‌نیازها</a> مراجعه کنید). همچنین اطمینان حاصل کنید توکن ربات و اطلاعات اتصال پایگاه‌داده به‌درستی در تنظیمات ثبت شده باشند.</p></div>
+        </details>
+        <details class="acc">
+          <summary>چرا با اینکه موجودی از کیف‌پول کسر شد، سرویس ساخته نشد؟<svg class="icon chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg></summary>
+          <div class="body"><p>در موارد نادر ممکن است اتصال به پنل بالادستی در لحظهٔ ساخت اکانت با خطا مواجه شود؛ در این حالت مبلغ از کیف‌پول کسر شده اما سرویسی تحویل داده نمی‌شود. faoxima در حال حاضر <strong>فرآیند بازگشت وجه خودکار ندارد</strong>؛ این موارد باید توسط ادمین به‌صورت دستی بررسی و جبران شوند. برای رفع سریع‌تر، وضعیت پنل و اطلاعات ورود آن را بررسی کنید و به بخش <a href="errors.html">مرجع خطاها</a> مراجعه کنید.</p></div>
+        </details>
+        <details class="acc">
+          <summary>هنگام ثبت یا اتصال پنل با خطا مواجه می‌شوم، چه باید کرد؟<svg class="icon chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg></summary>
+          <div class="body"><p>رایج‌ترین علت‌ها عبارتند از: آدرس یا پورت اشتباه، عدم تطابق پروتکل (<code class="inl">http</code>/<code class="inl">https</code>)، نام‌کاربری/رمز عبور نادرست ادمین، یا مسدود بودن دسترسی شبکه بین سرور ربات و پنل. ابتدا آدرس کامل پنل به‌همراه پورت را بررسی کنید و سپس اطلاعات ورود را دوباره ثبت کنید. فهرست کامل پیام‌های خطای مرتبط با پنل در بخش <a href="errors.html">مرجع خطاها</a> موجود است.</p></div>
+        </details>
+        <details class="acc">
+          <summary>آیا فهرست پنل‌های پشتیبانی‌شده کامل است؟<svg class="icon chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg></summary>
+          <div class="body"><p>جدول بخش <a href="#panels">پنل‌های پشتیبانی‌شده</a> پرکاربردترین پنل‌های پشتیبانی‌شده را نشان می‌دهد. برای مشاهدهٔ فهرست به‌روز و کامل، هنگام افزودن پنل جدید از داخل پنل وب ادمین به گزینه‌های موجود در آن مرحله مراجعه کنید.</p></div>
+        </details>
+        <details class="acc">
+          <summary>چه محدودیت‌های شناخته‌شده‌ای در faoxima وجود دارد؟<svg class="icon chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg></summary>
+          <div class="body"><p>در حال حاضر faoxima فرآیند بازگشت وجه خودکار ندارد و موارد ناموفق باید به‌صورت دستی توسط ادمین بررسی شوند. برخی امکانات نیز به شرایط خاص نیاز دارند؛ برای نمونه ایموجی پرمیوم تنها در صورتی کار می‌کند که حساب تلگرام مالک ربات دارای اشتراک Premium باشد.</p></div>
+        </details>
+        <details class="acc">
+          <summary>با خطای غیرمنتظره مواجه شدم، چه کار کنم؟<svg class="icon chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg></summary>
+          <div class="body"><p>در خطاهای غیرمنتظرهٔ سرور، پیام نمایش‌داده‌شده به کاربر عمداً کلی است و جزئیات فقط در لاگ سرور (<code class="inl">runtime.log</code>) ثبت می‌شود. پیش از تماس با پشتیبانی، موارد زیر را بررسی کنید: تنظیم‌بودن کرون‌جاب، صحت اطلاعات ورود پنل‌ها، و برقراری اتصال به پایگاه‌داده. فهرست کامل پیام‌های خطا در بخش <a href="errors.html">مرجع خطاها</a> موجود است.</p></div>
+        </details>
+      </section>
+
+    </article>
+  </div>
+</main>
+
+<footer class="foot">
+  <div class="foot-in">
+    <div class="l">
+      <a href="https://github.com/Mmd-Amir/Faoxima" target="_blank" rel="noopener">گیت‌هاب</a>
+      <span aria-hidden="true">·</span>
+      <a href="#top">بازگشت به بالا</a>
+    </div>
+    <div class="l">
+      <span class="brand-pill brand-pill-sm">
+        <span class="logo"><img src="./faoxima.jpg" alt="faoxima"></span>
+        <b>faoxima · GPL-3.0</b>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<div class="overlay" id="overlay" aria-hidden="true"></div>
+
+<script>
+(function(){
+  var root=document.documentElement;
+  var KEY="faxima-theme";
+  try{
+    var saved=localStorage.getItem(KEY);
+    if(saved){root.setAttribute("data-theme",saved);}
+    else if(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches){root.setAttribute("data-theme","dark");}
+  }catch(e){}
+  var tBtn=document.getElementById("themeBtn");
+  if(tBtn){tBtn.addEventListener("click",function(){
+    var next=root.getAttribute("data-theme")==="dark"?"light":"dark";
+    root.setAttribute("data-theme",next);
+    try{localStorage.setItem(KEY,next);}catch(e){}
+  });}
+
+  var body=document.body,menuBtn=document.getElementById("menuBtn"),overlay=document.getElementById("overlay"),sidebar=document.getElementById("sidebar");
+  function closeNav(){body.classList.remove("nav-open");if(menuBtn)menuBtn.setAttribute("aria-expanded","false");}
+  function openNav(){body.classList.add("nav-open");if(menuBtn)menuBtn.setAttribute("aria-expanded","true");}
+  if(menuBtn){menuBtn.addEventListener("click",function(){body.classList.contains("nav-open")?closeNav():openNav();});}
+  if(overlay){overlay.addEventListener("click",closeNav);}
+  document.addEventListener("keydown",function(e){if(e.key==="Escape")closeNav();});
+
+  var links=Array.prototype.slice.call(document.querySelectorAll(".nav-link"));
+  links.forEach(function(a){a.addEventListener("click",function(){if(window.innerWidth<=980)closeNav();});});
+
+  var map={};
+  links.forEach(function(a){var href=a.getAttribute("href")||"";if(href.charAt(0)!=="#")return;map[href.slice(1)]=a;});
+  var sections=Array.prototype.slice.call(document.querySelectorAll(".content section"));
+  if("IntersectionObserver" in window){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){
+          links.forEach(function(l){l.classList.remove("active");});
+          var act=map[en.target.id];
+          if(act)act.classList.add("active");
+        }
+      });
+    },{rootMargin:"-30% 0px -60% 0px",threshold:0});
+    sections.forEach(function(s){io.observe(s);});
+  }
+
+  document.querySelectorAll(".copy").forEach(function(btn){
+    btn.addEventListener("click",function(){
+      var code=btn.closest(".codeblock").querySelector("code");
+      var txt=code?code.textContent:"";
+      var done=function(){var o=btn.textContent;btn.textContent="کپی شد";btn.classList.add("done");setTimeout(function(){btn.textContent=o;btn.classList.remove("done");},1600);};
+      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(done).catch(function(){});}
+      else{try{var t=document.createElement("textarea");t.value=txt;document.body.appendChild(t);t.select();document.execCommand("copy");document.body.removeChild(t);done();}catch(e){}}
+    });
+  });
+
+  document.querySelectorAll(".acc").forEach(function(acc){
+    acc.addEventListener("toggle",function(){
+      if(!acc.open)return;
+      var parent=acc.parentElement;
+      parent.querySelectorAll(":scope > .acc").forEach(function(other){
+        if(other!==acc&&other.open)other.open=false;
+      });
+    });
+  });
+})();
+</script>
+
+
+</body></html>

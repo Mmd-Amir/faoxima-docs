@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="فهرست رایج‌ترین خطاهای ربات faoxima به‌همراه معنی و راه‌حل هرکدام.">
+<title>مرجع خطاها · faoxima</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffffff;
+  --bg-soft:#f7f7f8;
+  --surface:#ffffff;
+  --surface-2:#fafafa;
+  --border:#e7e7ea;
+  --border-strong:#d9d9de;
+  --text:#17171b;
+  --text-2:#3f3f46;
+  --muted:#71717a;
+  --primary:#16161a;
+  --primary-ink:#ffffff;
+  --accent:#5a63ff;
+  --accent-soft:rgba(90,99,255,.10);
+  --note:#3b82f6;
+  --note-soft:rgba(59,130,246,.09);
+  --warn:#d97706;
+  --warn-soft:rgba(217,119,6,.10);
+  --ok:#16a34a;
+  --grid-line:rgba(0,0,0,.045);
+  --shadow:0 1px 2px rgba(20,20,30,.04),0 8px 24px -12px rgba(20,20,30,.10);
+  --radius:14px;
+  --radius-sm:10px;
+  --topbar-h:62px;
+  --mono:ui-monospace,"SF Mono","JetBrains Mono","Cascadia Code",Menlo,Consolas,monospace;
+}
+html[data-theme="dark"]{
+  --bg:#0b0b0d;
+  --bg-soft:#0f0f12;
+  --surface:#141417;
+  --surface-2:#17171b;
+  --border:#26262b;
+  --border-strong:#33333a;
+  --text:#ededef;
+  --text-2:#c8c8cd;
+  --muted:#8d8d97;
+  --primary:#fafafa;
+  --primary-ink:#0b0b0d;
+  --accent:#7c84ff;
+  --accent-soft:rgba(124,132,255,.14);
+  --note:#5b9dff;
+  --note-soft:rgba(91,157,255,.12);
+  --warn:#f0a23b;
+  --warn-soft:rgba(240,162,59,.12);
+  --ok:#43c463;
+  --grid-line:rgba(255,255,255,.05);
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px -14px rgba(0,0,0,.6);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:"Vazirmatn",Tahoma,system-ui,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.85;
+  font-size:16px;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+a,button,.iconbtn,.brand,.nav-link{-webkit-tap-highlight-color:transparent;outline:none}
+a:focus,button:focus,.iconbtn:focus,.brand:focus,.nav-link:focus{outline:none}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+.icon{width:1.15em;height:1.15em;flex:0 0 auto;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;vertical-align:-.18em}
+
+/* Topbar */
+.topbar{
+  position:sticky;top:0;z-index:60;height:var(--topbar-h);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 clamp(16px,4vw,40px);
+  background:color-mix(in srgb,var(--bg) 86%,transparent);
+  backdrop-filter:saturate(160%) blur(10px);
+  border-bottom:1px solid var(--border);
+}
+.brand{display:flex;align-items:center;gap:11px;color:var(--text);direction:ltr}
+.brand:hover{text-decoration:none}
+.brand-pill{
+  display:flex;align-items:center;gap:9px;background:var(--surface-2);border:1px solid var(--border);
+  border-radius:999px;padding:0 16px 0 0;box-shadow:var(--shadow);height:36px;
+}
+.brand-pill-sm{height:28px;gap:7px;padding-inline-end:12px;direction:ltr}
+.brand-pill-sm b{font-size:13px}
+.logo{
+  width:36px;height:36px;border-radius:50%;display:grid;place-items:center;overflow:hidden;flex-shrink:0;
+  background:#fff;color:var(--primary-ink);font-weight:800;font-size:18px;
+  margin:-1px;box-shadow:0 1px 3px rgba(20,20,30,.18),0 3px 8px rgba(20,20,30,.14);
+}
+html[data-theme="dark"] .logo{box-shadow:none}
+.brand-pill-sm .logo{width:28px;height:28px}
+.logo img{width:100%;height:100%;object-fit:contain;object-position:center;transform:scale(1.35);display:block}
+.brand b{font-weight:800;font-size:18px;letter-spacing:-.01em}
+.brand .sub{color:var(--muted);font-size:13px;font-weight:500;border-left:1px solid var(--border-strong);padding-left:11px;margin-left:2px;direction:rtl}
+.bar-actions{display:flex;align-items:center;gap:6px}
+.iconbtn{
+  width:38px;height:38px;border-radius:10px;border:1px solid transparent;background:transparent;
+  color:var(--text-2);cursor:pointer;display:grid;place-items:center;transition:background .15s,color .15s,border-color .15s;
+}
+.iconbtn:hover{background:var(--bg-soft);color:var(--text);border-color:var(--border)}
+.iconbtn .icon{width:19px;height:19px}
+#menuBtn{display:none}
+.moon{display:none}
+html[data-theme="dark"] .sun{display:none}
+html[data-theme="dark"] .moon{display:block}
+
+/* Layout */
+.shell{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:266px minmax(0,1fr);gap:0}
+.sidebar{
+  position:sticky;top:var(--topbar-h);align-self:start;height:calc(100vh - var(--topbar-h));overflow-y:auto;
+  padding:30px 22px 60px;border-inline-end:1px solid var(--border);
+}
+.sidebar::-webkit-scrollbar{width:8px}
+.sidebar::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:8px}
+.nav-group+.nav-group{margin-top:24px}
+.nav-group>.gt{font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;padding:0 10px;margin-bottom:8px}
+.nav-link{
+  display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:9px;color:var(--text-2);
+  font-size:14.5px;font-weight:500;position:relative;transition:background .14s,color .14s;
+}
+.nav-link:hover{background:var(--bg-soft);color:var(--text);text-decoration:none}
+.nav-link .icon{width:17px;height:17px;color:var(--muted)}
+.nav-link.active{background:var(--accent-soft);color:var(--accent);font-weight:700}
+.nav-link.active .icon{color:var(--accent)}
+.nav-link.active::before{content:"";position:absolute;inset-inline-end:-22px;top:50%;transform:translateY(-50%);width:3px;height:20px;border-radius:3px;background:var(--accent)}
+
+.content{padding:clamp(28px,5vw,56px) clamp(20px,5vw,64px);min-width:0}
+.content section{scroll-margin-top:calc(var(--topbar-h) + 18px)}
+.content section+section{margin-top:62px;padding-top:46px;border-top:1px solid var(--border)}
+.kicker{font-size:12.5px;font-weight:700;letter-spacing:.06em;color:var(--accent);text-transform:uppercase;margin-bottom:10px}
+.content h2{display:flex;align-items:center;gap:12px;font-size:clamp(1.55rem,4vw,2rem);font-weight:800;letter-spacing:-.02em;margin:0 0 8px;line-height:1.25}
+.content h2 .hi{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent)}
+.content h2 .hi .icon{width:20px;height:20px;stroke-width:1.9}
+.content h3{font-size:1.18rem;font-weight:700;margin:34px 0 12px;letter-spacing:-.01em}
+.content p{color:var(--text-2);margin:0 0 14px}
+.lead-p{font-size:1.07rem;color:var(--muted)}
+.content ul,.content ol{color:var(--text-2);padding-inline-start:1.4em;margin:0 0 16px}
+.content li{margin:7px 0}
+.content li::marker{color:var(--accent)}
+strong{color:var(--text);font-weight:700}
+
+/* Inline code + code blocks */
+code.inl{font-family:var(--mono);font-size:.86em;background:var(--bg-soft);border:1px solid var(--border);padding:.12em .42em;border-radius:6px;color:var(--text);direction:ltr;unicode-bidi:embed}
+.codeblock{position:relative;margin:0 0 18px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface-2);overflow:hidden}
+.codeblock .cap{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;border-bottom:1px solid var(--border);background:var(--surface);font-size:12.5px;color:var(--muted);font-weight:600}
+.codeblock .cap .lang{font-family:var(--mono);text-transform:uppercase;letter-spacing:.05em}
+.copy{font-family:inherit;font-size:12px;font-weight:600;color:var(--text-2);background:transparent;border:1px solid var(--border);border-radius:7px;padding:4px 11px;cursor:pointer;transition:background .14s,color .14s}
+.copy:hover{background:var(--bg-soft);color:var(--text)}
+.copy.done{color:var(--ok);border-color:color-mix(in srgb,var(--ok) 40%,var(--border))}
+.codeblock pre{margin:0;padding:16px;overflow-x:auto;direction:ltr;text-align:left}
+.codeblock code{font-family:var(--mono);font-size:13.5px;line-height:1.7;color:var(--text);white-space:pre}
+.codeblock.fa pre{direction:rtl;text-align:right}
+.tok-c{color:var(--muted)}
+.tok-k{color:var(--accent);font-weight:600}
+
+/* Callouts */
+.callout{border:1px solid var(--border);border-inline-start-width:4px;border-radius:var(--radius-sm);padding:14px 16px;margin:0 0 18px;background:var(--surface)}
+.callout .ct{display:flex;align-items:center;gap:8px;font-weight:700;margin-bottom:4px}
+.callout p{margin:0;color:var(--text-2)}
+.callout.note{border-inline-start-color:var(--note);background:var(--note-soft)}
+.callout.note .ct{color:var(--note)}
+.callout.warn{border-inline-start-color:var(--warn);background:var(--warn-soft)}
+.callout.warn .ct{color:var(--warn)}
+
+/* Tables */
+.tablewrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius-sm);margin:0 0 18px;box-shadow:var(--shadow)}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px}
+thead th{background:var(--surface-2);text-align:right;font-weight:700;color:var(--text);padding:11px 14px;border-bottom:1px solid var(--border-strong);white-space:nowrap}
+tbody td{padding:11px 14px;border-bottom:1px solid var(--border);color:var(--text-2);vertical-align:top}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--bg-soft)}
+tbody tr.section-row td{text-align:center;font-weight:700;background:var(--surface-2);color:var(--accent)}
+tbody tr.section-row:hover{background:none}
+td code,th code{font-family:var(--mono);font-size:12.5px;background:var(--bg-soft);border:1px solid var(--border);padding:.1em .4em;border-radius:6px;color:var(--text);direction:ltr;display:inline-block}
+
+/* Error table: stacked-card layout on narrow viewports */
+@media (max-width:767px){
+  #errTable.cardview{min-width:0;width:100%}
+  #errTable.cardview thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  #errTable.cardview,#errTable.cardview tbody{display:block;width:100%}
+  #errTable.cardview tr{display:block;width:100%}
+  #errTable.cardview tbody tr{
+    border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);
+    padding:4px 0;margin:0 0 14px;box-shadow:var(--shadow);
+  }
+  #errTable.cardview tbody tr:last-child{margin-bottom:0}
+  #errTable.cardview tbody tr.hide{display:none}
+  #errTable.cardview tbody tr.section-row{border:none;box-shadow:none;background:transparent;margin:18px 0 8px;padding:0}
+  #errTable.cardview tbody tr.section-row:first-child{margin-top:0}
+  #errTable.cardview td{
+    display:flex;flex-direction:column;align-items:flex-start;gap:4px;
+    width:100%;padding:12px 14px;border-bottom:1px dashed var(--border);text-align:right;
+  }
+  #errTable.cardview td:last-child{border-bottom:none}
+  #errTable.cardview td::before{
+    content:attr(data-label);display:block;font-size:11px;font-weight:700;letter-spacing:.02em;
+    color:var(--accent);text-transform:uppercase;
+  }
+  #errTable.cardview td[data-label]:empty::before{display:none}
+  #errTable.cardview td code.inl{white-space:normal;word-break:break-word;max-width:100%}
+  #errTable.cardview td[data-col="0"]{background:var(--bg-soft);border-radius:10px 10px 0 0}
+  #errTable.cardview tr.section-row td{
+    display:block;padding:9px 14px;border-bottom:none;border-radius:var(--radius-sm);
+    background:var(--surface-2);color:var(--accent);font-weight:700;text-align:center;
+  }
+  #errTable.cardview tr.section-row td::before{content:none}
+}
+.tag-new{display:inline-block;font-size:11px;font-weight:700;color:#fff;background:var(--accent);padding:1px 8px;border-radius:999px;margin-inline-start:6px}
+.todo{display:inline-block;font-size:11px;font-weight:700;color:var(--warn);background:var(--warn-soft);border:1px dashed var(--warn);padding:1px 8px;border-radius:6px}
+.err-search{display:flex;align-items:center;gap:10px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);padding:10px 14px;margin:0 0 16px}
+.err-search .icon{width:18px;height:18px;color:var(--muted);flex:0 0 auto}
+.err-search input{flex:1;border:none;background:transparent;color:var(--text);font-family:inherit;font-size:14.5px;outline:none}
+.err-search input::placeholder{color:var(--muted)}
+tbody tr.hide{display:none}
+
+/* Feature grid */
+.grid-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:14px;margin:6px 0 4px}
+.card{border:1px solid var(--border);border-radius:var(--radius);padding:16px 17px;background:var(--surface);transition:transform .14s,border-color .14s,box-shadow .14s}
+.card:hover{transform:translateY(-2px);border-color:var(--border-strong);box-shadow:var(--shadow)}
+.card .ico{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent);margin-bottom:11px;font-size:19px}
+.card h4{margin:0 0 4px;font-size:15px;font-weight:700;color:var(--text)}
+.card p{margin:0;font-size:13.5px;color:var(--muted);line-height:1.7}
+
+/* Steps */
+.steps{list-style:none;counter-reset:s;padding:0;margin:0}
+.steps>li{counter-increment:s;position:relative;padding-inline-start:52px;padding-bottom:26px;border-inline-start:2px solid var(--border);margin-inline-start:16px}
+.steps>li:last-child{border-inline-start-color:transparent;padding-bottom:0}
+.steps>li::before{content:counter(s);position:absolute;inset-inline-start:-17px;top:-2px;width:32px;height:32px;border-radius:50%;background:var(--primary);color:var(--primary-ink);display:grid;place-items:center;font-weight:800;font-size:14px;box-shadow:0 0 0 4px var(--bg)}
+.steps h4{margin:0 0 6px;font-size:16px;font-weight:700;color:var(--text)}
+.steps p{margin:0 0 10px}
+
+/* Screenshot placeholder */
+.shot{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;border:2px dashed var(--border-strong);border-radius:var(--radius-sm);background:var(--bg-soft);color:var(--muted);padding:30px 20px;margin:0 0 14px;text-align:center}
+.shot .icon{width:28px;height:28px;stroke-width:1.5}
+.shot span{font-size:13px;font-weight:600}
+
+/* Accordion */
+.acc{border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;background:var(--surface)}
+.acc+.acc{margin-top:10px}
+.acc summary{list-style:none;cursor:pointer;padding:15px 18px;font-weight:700;color:var(--text);display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:15px}
+.acc summary::-webkit-details-marker{display:none}
+.acc summary .chev{transition:transform .2s;color:var(--muted)}
+.acc[open] summary .chev{transform:rotate(-180deg)}
+.acc summary:hover{background:var(--bg-soft)}
+.acc .body{padding:0 18px 16px;color:var(--text-2)}
+.acc .body p{margin:0}
+
+/* Footer */
+.foot{border-top:1px solid var(--border);background:var(--bg-soft);margin-top:50px}
+.foot-in{max-width:1240px;margin:0 auto;padding:30px clamp(20px,5vw,64px);display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between;color:var(--muted);font-size:13.5px}
+.foot a{font-weight:600}
+.foot .l{display:flex;align-items:center;gap:10px}
+.foot .l:first-child{direction:ltr}
+
+/* Mobile drawer */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:55;opacity:0;visibility:hidden;transition:opacity .2s}
+body.nav-open .overlay{opacity:1;visibility:visible}
+
+.codeblock pre,.tablewrap{-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+.sidebar{-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+
+@media (max-width:980px){
+  .shell{grid-template-columns:1fr}
+  #menuBtn{display:grid}
+  .brand .sub{display:none}
+  .brand-pill{height:30px}
+  .logo{width:30px;height:30px}
+  .sidebar{
+    position:fixed;top:var(--topbar-h);right:0;left:auto;height:calc(100dvh - var(--topbar-h));width:min(290px,84vw);
+    max-width:100vw;z-index:58;background:var(--surface);margin:0;
+    border-inline-end:none;border-left:1px solid var(--border);box-shadow:-20px 0 40px -20px rgba(0,0,0,.4);
+    transform:translateX(100%);transition:transform .24s ease;padding:24px 22px 60px;overflow-y:auto;
+  }
+  body.nav-open .sidebar{transform:translateX(0)}
+  body.nav-open{overflow:hidden}
+  .nav-link.active::before{display:none}
+  .content{padding-inline:20px}
+  .content section+section{margin-top:44px;padding-top:32px}
+}
+@media (max-width:640px){
+  body{font-size:15px;line-height:1.75}
+  .brand-pill{height:28px}
+  .logo{width:28px;height:28px;border-radius:50%}
+  .content h2{font-size:1.4rem;gap:9px}
+  .content h2 .hi{width:30px;height:30px}
+  .content h3{font-size:1.05rem;margin:26px 0 10px}
+  .lead-p{font-size:1rem}
+  .callout{padding:12px 14px}
+  .steps>li{padding-inline-start:44px;margin-inline-start:10px}
+  .steps>li::before{width:28px;height:28px;font-size:12.5px;inset-inline-start:-15px}
+  .grid-cards{grid-template-columns:1fr}
+  table{min-width:480px}
+  .codeblock .cap{padding:7px 12px;font-size:11.5px}
+  .codeblock pre{padding:12px}
+  .codeblock code{font-size:12.5px}
+}
+@media (max-width:420px){
+  .content{padding-inline:14px}
+  .content h2{font-size:1.22rem}
+  .brand b{font-size:16px}
+  .brand-pill{height:25px}
+  .logo{width:25px;height:25px;border-radius:50%}
+  .iconbtn{width:34px;height:34px}
+  table{min-width:420px;font-size:13px}
+  thead th,tbody td{padding:9px 10px}
+  .callout .ct{font-size:14px}
+}
+@media (max-width:900px) and (orientation:landscape) and (max-height:500px){
+  .brand-pill{height:30px}
+  .logo{width:30px;height:30px}
+  .sidebar{padding-top:14px}
+  .content{padding-block:20px}
+  .content section+section{margin-top:32px;padding-top:24px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{scroll-behavior:auto !important;transition:none !important;animation:none !important}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="bar-actions">
+    <a class="iconbtn" id="ghBtn" href="https://github.com/Mmd-Amir/Faoxima" target="_blank" rel="noopener" aria-label="گیت‌هاب">
+      <svg class="icon" viewBox="0 0 20 20" stroke-width="0" fill="currentColor" style="fill: currentcolor; stroke: none;"><g stroke-width="0"></g><g stroke-linecap="round" stroke-linejoin="round"></g><g>   <defs> </defs> <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g transform="translate(-140.000000, -7559.000000)" fill="currentColor"> <g transform="translate(56.000000, 160.000000)"> <path d="M94,7399 C99.523,7399 104,7403.59 104,7409.253 C104,7413.782 101.138,7417.624 97.167,7418.981 C96.66,7419.082 96.48,7418.762 96.48,7418.489 C96.48,7418.151 96.492,7417.047 96.492,7415.675 C96.492,7414.719 96.172,7414.095 95.813,7413.777 C98.04,7413.523 100.38,7412.656 100.38,7408.718 C100.38,7407.598 99.992,7406.684 99.35,7405.966 C99.454,7405.707 99.797,7404.664 99.252,7403.252 C99.252,7403.252 98.414,7402.977 96.505,7404.303 C95.706,7404.076 94.85,7403.962 94,7403.958 C93.15,7403.962 92.295,7404.076 91.497,7404.303 C89.586,7402.977 88.746,7403.252 88.746,7403.252 C88.203,7404.664 88.546,7405.707 88.649,7405.966 C88.01,7406.684 87.619,7407.598 87.619,7408.718 C87.619,7412.646 89.954,7413.526 92.175,7413.785 C91.889,7414.041 91.63,7414.493 91.54,7415.156 C90.97,7415.418 89.522,7415.871 88.63,7414.304 C88.63,7414.304 88.101,7413.319 87.097,7413.247 C87.097,7413.247 86.122,7413.234 87.029,7413.87 C87.029,7413.87 87.684,7414.185 88.139,7415.37 C88.139,7415.37 88.726,7417.2 91.508,7416.58 C91.513,7417.437 91.522,7418.245 91.522,7418.489 C91.522,7418.76 91.338,7419.077 90.839,7418.982 C86.865,7417.627 84,7413.783 84,7409.253 C84,7403.59 88.478,7399 94,7399"> </path> </g> </g> </g> </g></svg>
+    </a>
+    <button class="iconbtn" id="themeBtn" aria-label="تغییر حالت روشن و تاریک">
+      <svg class="icon sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      <svg class="icon moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+    </button>
+    <button class="iconbtn" id="menuBtn" aria-label="باز کردن منو" aria-expanded="false">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+  <a class="brand" href="index.html#top" aria-label="faoxima">
+    <span class="brand-pill">
+      <span class="logo"><img src="./faoxima.jpg" alt="faoxima"></span>
+      <b>faoxima</b>
+    </span>
+  </a>
+  </div>
+</header>
+
+<main id="top">
+  <div class="shell">
+
+    <aside class="sidebar" id="sidebar">
+      <nav aria-label="فهرست مستندات">
+        <div class="nav-group">
+          <div class="gt">معرفی</div>
+          <a class="nav-link" href="index.html#intro"><svg class="icon" viewBox="0 0 16 16" style="fill: none; stroke: currentcolor;"><g stroke-width="0"></g><g stroke-linecap="round" stroke-linejoin="round"></g><g> <rect height="7.5" width="12.5" y="5.75" x="1.75"></rect> <path d="m10.75 8.75v1.5m-5.5-1.5v1.5m-.5-7.5 3.25 3 3.25-3"></path> </g></svg>معرفی faoxima</a>
+        </div>
+        <div class="nav-group">
+          <div class="gt">راه‌اندازی</div>
+          <a class="nav-link" href="index.html#prerequisites"><svg class="icon" viewBox="0 0 24 24"><g stroke-width="0"></g><g stroke-linecap="round" stroke-linejoin="round"></g><g> <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->   <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g fill="currentColor" fill-rule="nonzero"> <path d="M17.5,12 C17.7930736,12 18.0806075,12.024542 18.3607867,12.0717481 L18.5341163,12.7877987 C18.7930873,13.8615807 19.8734971,14.5221156 20.9472791,14.2631446 L21.0450624,14.2369258 L21.6461665,14.0580331 C22.0087308,14.5250263 22.2991223,15.0545692 22.4998264,15.6285394 L22.0525916,16.0588054 C21.2985339,16.7843546 21.2369524,17.9588704 21.8837443,18.7572658 L22.0250857,18.9142136 L22.4998264,19.3714606 C22.2992653,19.9450217 22.0091447,20.4742188 21.6469416,20.9409683 L21.0450624,20.7630742 C19.9857606,20.4500989 18.8733103,21.0551161 18.5603351,22.1144179 L18.5341163,22.2122013 L18.3607867,22.9282519 C18.0806075,22.975458 17.7930736,23 17.5,23 C17.2066096,23 16.918771,22.9754049 16.6383049,22.9280988 L16.4658837,22.2122013 C16.2069127,21.1384193 15.1265029,20.4778844 14.0527209,20.7368554 L13.9549376,20.7630742 L13.3530584,20.9409683 C12.9908553,20.4742188 12.7007347,19.9450217 12.5001736,19.3714606 L12.9474084,18.9411946 C13.7014661,18.2156454 13.7630476,17.0411296 13.1162557,16.2427342 L12.9749143,16.0857864 L12.5001736,15.6285394 C12.7007347,15.0549783 12.9908553,14.5257812 13.3530584,14.0590317 L13.9549376,14.2369258 C15.0142394,14.5499011 16.1266897,13.9448839 16.4396649,12.8855821 L16.4658837,12.7877987 L16.6383049,12.0719012 C16.918771,12.0245951 17.2066096,12 17.5,12 Z M13.75,2 C14.9926407,2 16,3.00735931 16,4.25 L16.0001627,11.1738934 C15.4723044,11.2985682 14.969311,11.4876006 14.4999221,11.7322512 L14.5,4.25 C14.5,3.83578644 14.1642136,3.5 13.75,3.5 L6.25,3.5 C5.83578644,3.5 5.5,3.83578644 5.5,4.25 L5.5,19.75 C5.5,20.1642136 5.83578644,20.5 6.25,20.5 L11.7327703,20.5010736 C12.0200482,21.0520148 12.3839565,21.5566422 12.8103588,22.0008195 L6.25,22 C5.00735931,22 4,20.9926407 4,19.75 L4,4.25 C4,3.00735931 5.00735931,2 6.25,2 L13.75,2 Z M8.74887095,17.5037644 L10.9999992,17.4989995 C10.9999992,18.0162111 11.0601751,18.5183676 11.1738934,18.9998373 L8.75112905,19.0037644 C8.33691596,19.0043862 8.00062441,18.6691057 7.99999915,18.2548926 C7.99937729,17.8406795 8.33465786,17.5043879 8.74887095,17.5037644 Z M17.5,16 C16.6993682,16 16.0503279,16.6715729 16.0503279,17.5 C16.0503279,18.3284271 16.6993682,19 17.5,19 C18.3006318,19 18.9496721,18.3284271 18.9496721,17.5 C18.9496721,16.6715729 18.3006318,16 17.5,16 Z"> </path> </g> </g> </g></svg>پیش‌نیازها</a>
+        </div>
+        <div class="nav-group">
+          <div class="gt">آموزش</div>
+          <a class="nav-link" href="install.html"><svg class="icon" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>نصب و راه‌اندازی</a>
+          <a class="nav-link" href="migrate.html"><svg class="icon" viewBox="0 0 32 32" style="fill:currentColor;stroke:none"><g transform="translate(-300,-436)"><path d="m 307,458.01367 a 1,1 0 0 0 -1,1 1,1 0 0 0 1,1 h 4 a 1,1 0 0 0 1,-1 1,1 0 0 0 -1,-1 z"/><path d="m 323,455.01367 a 1,1 0 0 0 -0.0508,0.006 1.0001,1.0001 0 0 0 -0.11914,0.0137 1,1 0 0 0 -0.10547,0.0254 1.0001,1.0001 0 0 0 -0.10352,0.0352 1,1 0 0 0 -0.10547,0.0508 1.0001,1.0001 0 0 0 -0.0898,0.0566 1,1 0 0 0 -0.0859,0.0684 1.0001,1.0001 0 0 0 -0.0469,0.0371 l -2,2 a 1,1 0 0 0 0,1.41406 1,1 0 0 0 1.41406,0 L 322,458.42773 v 3.58594 a 1,1 0 0 0 1,1 1,1 0 0 0 1,-1 v -3.58594 l 0.29297,0.29297 a 1,1 0 0 0 1.41406,0 1,1 0 0 0 0,-1.41406 l -1.9707,-1.9707 a 1,1 0 0 0 -0.40625,-0.26563 1.0001,1.0001 0 0 0 -0.002,0 1.0001,1.0001 0 0 0 -0.004,-0.002 1,1 0 0 0 -0.19922,-0.0449 1.0001,1.0001 0 0 0 -0.0273,-0.004 1,1 0 0 0 -0.0977,-0.006 z"/><path d="m 307,450.01367 a 1,1 0 0 0 -1,1 1,1 0 0 0 1,1 h 4 a 1,1 0 0 0 1,-1 1,1 0 0 0 -1,-1 z"/><path d="m 307,442.01367 a 1,1 0 0 0 -1,1 1,1 0 0 0 1,1 h 4 a 1,1 0 0 0 1,-1 1,1 0 0 0 -1,-1 z"/><path d="m 305,438.01367 c -1.6447,0 -3,1.3553 -3,3 v 4 c 0,0.76628 0.29675,1.46716 0.77734,2 -0.48059,0.53284 -0.77734,1.23372 -0.77734,2 v 4 c 0,0.76628 0.29675,1.46716 0.77734,2 -0.48059,0.53284 -0.77734,1.23372 -0.77734,2 v 4 c 0,1.6447 1.3553,3 3,3 h 13.11133 c 1.26351,1.23579 2.98973,2 4.88867,2 3.85414,0 7,-3.14585 7,-7 0,-2.78161 -1.63913,-5.19487 -4,-6.32226 v -3.67774 c 0,-0.76628 -0.29675,-1.46716 -0.77734,-2 0.48059,-0.53284 0.77734,-1.23372 0.77734,-2 v -4 c 0,-1.6447 -1.3553,-3 -3,-3 z m 0,2 h 18 c 0.5713,0 1,0.42871 1,1 v 4 c 0,0.5713 -0.4287,1 -1,1 h -18 c -0.5713,0 -1,-0.4287 -1,-1 v -4 c 0,-0.57129 0.4287,-1 1,-1 z m 0,8 h 18 c 0.5713,0 1,0.42871 1,1 v 3.07227 c -0.32711,-0.0472 -0.66021,-0.0723 -1,-0.0723 -1.89894,0 -3.62516,0.76421 -4.88867,2 H 305 c -0.5713,0 -1,-0.4287 -1,-1 v -4 c 0,-0.57129 0.4287,-1 1,-1 z m 18,6 c 2.77327,0 5,2.22674 5,5 0,2.77327 -2.22673,5 -5,5 -1.44074,0 -2.73243,-0.602 -3.64258,-1.56836 a 1,1 0 0 0 -0.16797,-0.18554 C 318.44728,461.38795 318,460.25556 318,459.01367 c 0,-1.25636 0.45901,-2.39958 1.2168,-3.27539 a 1,1 0 0 0 0.0645,-0.0762 c 0.91337,-1.01394 2.23794,-1.64844 3.71875,-1.64844 z m -18,2 h 11.67773 c -0.43469,0.9103 -0.67773,1.92747 -0.67773,3 0,1.07253 0.24304,2.0897 0.67773,3 H 305 c -0.5713,0 -1,-0.4287 -1,-1 v -4 c 0,-0.57129 0.4287,-1 1,-1 z"/></g></svg>مهاجرت از میرزا</a>
+        </div>
+        <div class="nav-group">
+          <div class="gt">امکانات</div>
+          <a class="nav-link" href="index.html#features"><svg class="icon" viewBox="0 0 24 24"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/></svg>امکانات و مزایا</a>
+        </div>
+        <div class="nav-group">
+          <div class="gt">مرجع</div>
+          <a class="nav-link" href="index.html#panels"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="6" rx="1.5"/><rect x="3" y="14" width="18" height="6" rx="1.5"/><path d="M7 7h.01M7 17h.01"/></svg>پنل‌های پشتیبانی‌شده</a>
+          <a class="nav-link active" href="errors.html"><svg class="icon" viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>مرجع خطاها</a>
+          <a class="nav-link" href="index.html#faq"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 0 1 4.4 1.6c0 1.6-2.4 2.1-2.4 3.4M12 17h.01"/></svg>سوالات متداول</a>
+        </div>
+      </nav>
+    </aside>
+
+    <article class="content">
+
+      <section id="errors">
+        <div class="kicker">مرجع</div>
+        <h2><span class="hi"><svg class="icon" viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></span>مرجع خطاها</h2>
+        <p>پیام‌های خطای انگلیسی که ربات، مینی‌اپ و آداپتورهای پنل واقعاً در کد و لاگ خروجی می‌دهند، به‌همراه معنی، علل احتمالی و راه‌حل هرکدام به فارسی:</p>
+        <div class="err-search">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg>
+          <input type="text" id="errSearch" placeholder="جست‌وجوی خطا…" autocomplete="off">
+        </div>
+        <div class="tablewrap">
+          <table id="errTable">
+            <thead><tr><th>کد خطا / پیام</th><th>معنی</th><th>علل احتمالی</th><th>راه‌حل</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inl">HTTP 200 · Successful</code></td><td>درخواست به API مینی‌اپ با موفقیت انجام شد.</td><td>—</td><td>—</td></tr>
+              <tr><td><code class="inl">HTTP 400 · Bad request</code></td><td>ورودی درخواست به مینی‌اپ نامعتبر یا ناقص است.</td><td>پارامتری اشتباه یا با فرمت نادرست به API مینی‌اپ ارسال شده است.</td><td>ورودی را مطابق فرمت مورد انتظار اصلاح و دوباره ارسال کنید.</td></tr>
+              <tr><td><code class="inl">HTTP 401 · Authorization header missing</code></td><td>هدر احراز هویت در درخواست به API مینی‌اپ ارسال نشده است.</td><td>هدر <code class="inl">Authorization: Bearer</code> اصلاً ارسال نشده است.</td><td>توکن معتبر کاربر را در هدر درخواست ارسال کنید.</td></tr>
+              <tr><td><code class="inl">HTTP 401 · Authorization header missing or malformed</code></td><td>هدر Bearer توکن مینی‌اپ ارسال نشده یا فرمت آن اشتباه است.</td><td>هدر <code class="inl">Authorization</code> خالی است یا با پیشوند <code class="inl">Bearer</code> شروع نمی‌شود.</td><td>مینی‌اپ را از داخل ربات دوباره باز کنید تا یک نشست (session) معتبر دریافت شود.</td></tr>
+              <tr><td><code class="inl">HTTP 403 · Token invalid</code></td><td>توکن Bearer ارسالی با هیچ کاربری در سیستم مطابقت ندارد.</td><td>نشست کاربر منقضی یا نامعتبر شده است.</td><td>مینی‌اپ را دوباره از داخل ربات باز کنید.</td></tr>
+              <tr><td><code class="inl">HTTP 403 · Forbidden</code></td><td>دسترسی به این عملیات مجاز نیست.</td><td>کاربر مسدود شده یا مالک منبع درخواستی نیست.</td><td>با حساب صحیح وارد شوید؛ در صورت تکرار با پشتیبانی تماس بگیرید.</td></tr>
+              <tr><td><code class="inl">HTTP 403 · user blocked</code></td><td>کاربر توسط ادمین مسدود شده و اجازهٔ استفاده از مینی‌اپ را ندارد.</td><td>وضعیت کاربر در دیتابیس روی <code class="inl">block</code> تنظیم شده است.</td><td>در صورت اشتباه بودن مسدودی، با پشتیبانی یا ادمین ربات تماس بگیرید.</td></tr>
+              <tr><td><code class="inl">HTTP 404 · Not found</code></td><td>منبع درخواستی در API مینی‌اپ پیدا نشد.</td><td>شناسهٔ درخواستی نامعتبر است یا حذف شده.</td><td>شناسهٔ درخواستی را بررسی کنید.</td></tr>
+              <tr><td><code class="inl">HTTP 405 · Method invalid; must be {method}</code></td><td>متد HTTP درخواست با آنچه endpoint انتظار دارد مطابقت ندارد.</td><td>درخواست با متدی غیر از متد مجاز (مثلاً GET به‌جای POST) ارسال شده است.</td><td>متد صحیح را طبق مستندات API استفاده کنید.</td></tr>
+              <tr><td><code class="inl">HTTP 500 · Internal server error</code></td><td>خطای غیرمنتظرهٔ سرور در پردازش درخواست رخ داده است.</td><td>استثنای مدیریت‌نشده (uncaught exception) یا خطای بحرانی PHP در کد برنامه.</td><td>لاگ سرور را بررسی کنید؛ در صورت تکرار با پشتیبانی تماس بگیرید.</td></tr>
+              <tr><td><code class="inl">Server is not configured (missing bot token)</code></td><td>توکن ربات روی سرور تنظیم نشده است.</td><td>مرحلهٔ نصب/پیکربندی بدون وارد کردن توکن BotFather کامل شده است.</td><td>توکن ربات را در تنظیمات/سرور ثبت کنید.</td></tr>
+              <tr><td><code class="inl">Telegram init data is missing or invalid</code></td><td>داده‌های اولیهٔ ورود از تلگرام (Telegram WebApp init data) در مینی‌اپ معتبر نیست.</td><td>مینی‌اپ خارج از محیط تلگرام باز شده، یا امضای init data نامعتبر است.</td><td>مینی‌اپ را از داخل ربات تلگرام باز کنید، نه از مرورگر مستقل.</td></tr>
+              <tr><td><code class="inl">Failed to register user</code></td><td>ثبت خودکار کاربر جدید مینی‌اپ ناموفق بود.</td><td>خطا هنگام درج رکورد کاربر در دیتابیس.</td><td>اتصال دیتابیس را بررسی کرده و دوباره تلاش کنید.</td></tr>
+              <tr><td><code class="inl">Failed to generate session token</code></td><td>ساخت توکن نشست برای کاربر مینی‌اپ ناموفق بود.</td><td>خطای داخلی در تولید توکن پس از احراز هویت موفق کاربر.</td><td>دوباره تلاش کنید؛ در صورت تکرار لاگ سرور را بررسی کنید.</td></tr>
+              <tr><td><code class="inl">Panel Not Found</code></td><td>رکورد پنل در دیتابیس پیدا نشد.</td><td>پنل هنوز ثبت نشده، یا رکورد آن حذف/غیرفعال شده است.</td><td>از «مدیریت پنل» پنل را انتخاب یا دوباره ثبت کنید.</td></tr>
+              <tr><td><code class="inl">User not found</code></td><td>اکانت کاربر روی پنل پیدا نشد.</td><td>اکانت روی پنل حذف شده یا هرگز ساخته نشده است.</td><td>وضعیت اکانت را روی پنل بررسی و در صورت نیاز دوباره بسازید.</td></tr>
+              <tr><td><code class="inl">Username must be at least 3 characters long.</code></td><td>نام کاربری وارد‌شده برای ساخت سرویس خیلی کوتاه است.</td><td>نام کاربری کمتر از سه کاراکتر وارد شده است.</td><td>نام کاربری با حداقل سه کاراکتر وارد کنید.</td></tr>
+              <tr><td><code class="inl">[REMNAMWAVE-AUTH-REQ] missing static API token for panel</code></td><td>توکن ثابت API برای پنل Remnawave تنظیم نشده است.</td><td>هنگام ثبت پنل Remnawave، فیلد توکن API خالی مانده است.</td><td>توکن API پنل Remnawave را در تنظیمات پنل وارد کنید.</td></tr>
+              <tr><td><code class="inl">[REMNAMWAVE-PANEL-TEST-FAIL] could not obtain token</code></td><td>دریافت توکن از پنل Remnawave در تست اتصال ناموفق بود.</td><td>توکن API نامعتبر است یا پنل درخواست را رد کرده است.</td><td>توکن API و آدرس پنل را بررسی و دوباره ثبت کنید.</td></tr>
+              <tr><td><code class="inl">[REMNAMWAVE-PANEL-TEST-FAIL] URL contains extra path</code></td><td>آدرس ثبت‌شدهٔ پنل Remnawave شامل مسیر اضافی است.</td><td>آدرس پنل با بخش‌هایی مثل <code class="inl">/dashboard</code> وارد شده، در حالی که فقط باید دامنهٔ پنل وارد شود.</td><td>فقط دامنهٔ پنل را بدون مسیر اضافی وارد کنید.</td></tr>
+              <tr><td><code class="inl">[REMNAMWAVE-PANEL-TEST-FAIL] Non-JSON response (likely dashboard URL)</code></td><td>پاسخ پنل Remnawave در تست اتصال، JSON معتبر نبود.</td><td>آدرس واردشده به داشبورد وب پنل اشاره دارد نه به آدرس API.</td><td>آدرس صحیح API پنل (نه آدرس داشبورد) را وارد کنید.</td></tr>
+              <tr><td><code class="inl">authentication failed</code></td><td>احراز هویت با پنل Remnawave در زمان ساخت سرویس ناموفق بود.</td><td>توکن API معتبر نیست یا در دسترس نبود.</td><td>توکن API پنل را بررسی و دوباره ثبت کنید.</td></tr>
+              <tr><td><code class="inl">[REMNAWAVE-ADMIN-ERROR]</code></td><td>خطا هنگام یک عملیات ادمین روی پنل Remnawave رخ داده است.</td><td>جزئیات دقیق خطا در متن پیام لاگ‌شده در گروه/تاپیک ادمین ذکر می‌شود.</td><td>متن کامل پیام خطا در گروه ادمین را بررسی و طبق آن اقدام کنید.</td></tr>
+              <tr><td><code class="inl">remnawave user not found</code></td><td>کاربر موردنظر در سیستم Remnawave پیدا نشد.</td><td>اکانت کاربر روی پنل Remnawave حذف شده یا هرگز ساخته نشده است.</td><td>وضعیت اکانت را روی پنل Remnawave بررسی کنید.</td></tr>
+              <tr><td><code class="inl">Guard panel not found</code></td><td>رکورد پنل نوع Guard در دیتابیس پیدا نشد.</td><td>پنل هنوز ثبت نشده یا حذف شده است.</td><td>پنل Guard را از «مدیریت پنل» دوباره انتخاب یا ثبت کنید.</td></tr>
+              <tr><td><code class="inl">API key is not configured for this Guard panel</code></td><td>کلید API برای پنل Guard تنظیم نشده است.</td><td>هنگام ثبت پنل، فیلد کلید API خالی مانده است.</td><td>کلید API پنل Guard را در تنظیمات پنل وارد کنید.</td></tr>
+              <tr><td><code class="inl">Invalid services response from Guard</code></td><td>پاسخ دریافتی از پنل Guard برای فهرست سرویس‌ها نامعتبر بود.</td><td>پنل Guard در دسترس نیست یا نسخهٔ ناسازگاری اجرا می‌کند.</td><td>اتصال و آدرس پنل Guard را بررسی کنید.</td></tr>
+              <tr><td><code class="inl">No services available on Guard panel</code></td><td>هیچ سرویسی روی پنل Guard موجود نیست.</td><td>ظرفیت پنل تکمیل شده یا سرویسی تعریف نشده است.</td><td>ظرفیت/تنظیمات سرویس‌ها را روی پنل Guard بررسی کنید.</td></tr>
+              <tr><td><code class="inl">Invalid JSON response</code></td><td>پاسخ دریافتی از پنل، JSON معتبر نبود.</td><td>آدرس یا پورت پنل اشتباه است، یا پنل پاسخ غیرمنتظره‌ای برگردانده است.</td><td>آدرس و پورت پنل را بررسی کنید.</td></tr>
+              <tr><td><code class="inl">client not found</code></td><td>کاربر موردنظر در پنل x-ui/3x-ui پیدا نشد.</td><td>اکانت روی پنل حذف شده یا شناسهٔ آن تغییر کرده است.</td><td>وضعیت اکانت را روی پنل بررسی کنید.</td></tr>
+              <tr><td><code class="inl">token mode required</code></td><td>عملیات درخواست‌شده روی این پنل نیاز به حالت توکن دارد که فعال نیست.</td><td>پنل با حالت احراز هویت متفاوتی (بدون توکن) پیکربندی شده است.</td><td>تنظیمات احراز هویت پنل را بررسی کنید.</td></tr>
+              <tr><td><code class="inl">no active users</code></td><td>هیچ کاربر فعالی برای عملیات گروهی (bulk) پیدا نشد.</td><td>در بازهٔ زمانی/شرایط تعیین‌شده هیچ اکانت فعالی روی پنل وجود ندارد.</td><td>شرایط فیلتر را بررسی یا عملیات را روی پنل دیگری اجرا کنید.</td></tr>
+              <tr><td><code class="inl">Invalid authority</code></td><td>پارامتر Authority بازگشتی از درگاه زرین‌پال معتبر نیست.</td><td>فرایند بازگشت از درگاه دستکاری یا قطع شده است.</td><td>پرداخت را دوباره از ابتدا در ربات یا مینی‌اپ آغاز کنید.</td></tr>
+              <tr><td><code class="inl">Invalid body</code></td><td>بدنهٔ درخواست بازگشتی (callback) از درگاه پرداخت معتبر نیست.</td><td>درخواست callback با فرمت نادرست یا ناقص از درگاه دریافت شده است.</td><td>در صورت تکرار، وضعیت درگاه پرداخت و آدرس callback را بررسی کنید.</td></tr>
+              <tr><td><code class="inl">Missing signature</code> / <code class="inl">Bad signature</code></td><td>امضای امنیتی درخواست بازگشتی از درگاه پرداخت وجود ندارد یا نامعتبر است.</td><td>کلید مخفی درگاه در تنظیمات با مقدار درگاه مطابقت ندارد.</td><td>کلید API/مخفی درگاه پرداخت را بررسی و دوباره ثبت کنید.</td></tr>
+              <tr><td><code class="inl">Order not found</code></td><td>سفارش مرتبط با پرداخت بازگشتی پیدا نشد.</td><td>شناسهٔ سفارش نامعتبر است یا سفارش قبلاً حذف شده است.</td><td>وضعیت سفارش را در پنل ادمین بررسی کنید.</td></tr>
+              <tr><td><code class="inl">Already processed</code></td><td>این پرداخت قبلاً پردازش و تأیید شده است.</td><td>درخواست بازگشتی (callback) بیش از یک‌بار برای همان پرداخت ارسال شده؛ این حالت به‌صورت ایمن نادیده گرفته می‌شود.</td><td>نیازی به اقدام نیست؛ موجودی کاربر قبلاً شارژ شده است.</td></tr>
+              <tr><td><code class="inl">CurlRequest error calling {URL}: Failed to connect to {host} port {port} after {N} ms: Connection refused (HTTP code: 0)</code></td><td>اتصال TCP به آدرس پنل برقرار نشد؛ متن خطا مستقیماً از cURL گرفته شده است.</td><td>پنل خاموش است، پورت اشتباه است، یا فایروال سرور/هاست پنل درخواست را رد کرده است.</td><td>آدرس، پورت و در دسترس‌بودن پنل را بررسی کنید؛ این خطا فقط در لاگ سرور ثبت می‌شود، نه در پیام کاربر.</td></tr>
+              <tr><td><code class="inl">CurlRequest error calling {URL}: Operation timed out after {N} milliseconds (HTTP code: 0)</code></td><td>اتصال به پنل در بازهٔ زمانی مجاز پاسخ نداد.</td><td>پنل کند پاسخ می‌دهد، شبکه بین سرور ربات و پنل کند/ناپایدار است، یا پنل در دسترس نیست.</td><td>در صورت تکرار، بار سرور پنل و اتصال شبکه را بررسی کنید؛ ربات یک‌بار به‌صورت خودکار درخواست را تکرار می‌کند.</td></tr>
+              <tr><td><code class="inl">Panel temporarily unavailable (HTTP {code}).</code></td><td>پنل با کد وضعیت خطای سرور (مثل ۵۰۲/۵۰۳/۵۰۴) پاسخ داده است.</td><td>سرویس پنل در حال ری‌استارت، اورلود، یا پشت یک ریورس‌پروکسی از کار افتاده است.</td><td>چند لحظه صبر کرده و دوباره تلاش کنید؛ در صورت تکرار وضعیت سرویس پنل را بررسی کنید.</td></tr>
+              <tr><td><code class="inl">Panel configuration not found for the provided code.</code></td><td>رکورد پنل Marzban با کد واردشده پیدا نشد.</td><td>کد پنل اشتباه است یا پنل حذف شده است.</td><td>کد پنل را در «مدیریت پنل» بررسی و در صورت نیاز پنل را دوباره ثبت کنید.</td></tr>
+              <tr><td><code class="inl">Panel configuration not found for the requested location.</code></td><td>هیچ پنل Marzban فعالی برای لوکیشن/محصول انتخاب‌شده تنظیم نشده است.</td><td>محصول به هیچ پنلی متصل نیست، یا پنل مربوطه غیرفعال/حذف شده است.</td><td>اتصال محصول به پنل را در تنظیمات محصول بررسی کنید.</td></tr>
+              <tr><td><code class="inl">Unable to decode panel response.</code></td><td>پاسخ دریافتی از پنل Marzban قابل خواندن (decode) نبود.</td><td>پنل پاسخ غیر-JSON یا خراب برگردانده، معمولاً به‌دلیل خطای داخلی پنل یا آدرس اشتباه.</td><td>آدرس پنل و لاگ خود پنل Marzban را بررسی کنید.</td></tr>
+              <tr><td><code class="inl">Successful login</code></td><td>ورود به پنل IBSng با موفقیت انجام شد.</td><td>—</td><td>—</td></tr>
+              <tr><td><code class="inl">Unable to initialise cURL for Telegram request.</code></td><td>ارتباط ربات با سرور تلگرام برقرار نشد چون cURL راه‌اندازی نشد.</td><td>اکستنشن cURL در PHP نصب/فعال نیست یا با خطای سیستمی مواجه شده.</td><td>نصب و فعال‌بودن اکستنشن <code class="inl">curl</code> در PHP را بررسی کنید.</td></tr>
+              <tr><td><code class="inl">Invalid response received from Telegram.</code></td><td>پاسخ دریافتی از API تلگرام قابل خواندن یا نامعتبر بود.</td><td>قطعی موقت ارتباط با سرورهای تلگرام، یا فیلترینگ/مسدودی شبکه سرور ربات.</td><td>اتصال شبکهٔ سرور به api.telegram.org را بررسی کنید؛ معمولاً موقتی است.</td></tr>
+              <tr><td><code class="inl">Telegram request failed.</code></td><td>درخواست ربات به API تلگرام ناموفق بود.</td><td>خطای شبکه بین سرور ربات و تلگرام، احتمالاً به‌دلیل فیلترینگ یا نبود دسترسی مستقیم.</td><td>در صورت نیاز، پروکسی یا DNS سرور را برای دسترسی به api.telegram.org بررسی کنید.</td></tr>
+              <tr><td><code class="inl">❌ خطا در ارتباط با پنل. جزئیات در لاگ [REMNAWAVE-ADMIN-ERROR]</code></td><td>عملیات ادمین روی پنل Remnawave در پنل وب/ربات ناموفق بود.</td><td>خطای API پنل، توکن نامعتبر، یا قطعی اتصال؛ جزئیات دقیق فقط در فایل لاگ سرور ثبت می‌شود.</td><td>فایل لاگ سرور را برای خط <code class="inl">[REMNAWAVE-ADMIN-ERROR]</code> بررسی کنید.</td></tr>
+              <tr><td><code class="inl">⭕️ خطای ساخت اشتراک · دلیل خطا: 301</code></td><td>ساخت اکانت روی پنل ریموت ناموفق بود؛ عدد ۳۰۱ همان کد HTTP خام برگشتی از خود پنل است، نه کد داخلی ربات.</td><td>پنل به‌جای پاسخ JSON، ریدایرکت (301) برگردانده؛ معمولاً به‌دلیل آدرس نادرست پنل (اسلش/http-https) یا ریورس‌پروکسی جلوی آن.</td><td>آدرس پنل را در «مدیریت پنل» بررسی و اصلاح کنید؛ اتصال مستقیم به API پنل را با curl تست کنید. مبلغ کاربر خودکار بازگردانده می‌شود.</td></tr>
+              <tr class="section-row"><td colspan="4">خطاهای اعتبارسنجی ورودی (API مینی‌اپ)</td></tr>
+              <tr><td><code class="inl">country_id is required</code></td><td>شناسهٔ کشور در درخواست ارسال نشده است.</td><td>درخواست به endpoint‌های دسته‌بندی/قیمت/سرویس/بازهٔ زمانی بدون پارامتر <code class="inl">country_id</code> ارسال شده.</td><td>مینی‌اپ را دوباره باز کنید؛ در صورت تکرار با پشتیبانی فنی تماس بگیرید.</td></tr>
+              <tr><td><code class="inl">category not found (invalid category_id)</code></td><td>دسته‌بندی موردنظر پیدا نشد.</td><td><code class="inl">category_id</code> نامعتبر است یا دسته حذف شده.</td><td>لیست دسته‌بندی‌ها را در مینی‌اپ رفرش کنید.</td></tr>
+              <tr><td><code class="inl">order_id is required</code></td><td>شناسهٔ سفارش ارسال نشده است.</td><td>استعلام وضعیت پرداخت بدون پارامتر <code class="inl">order_id</code> فراخوانی شده.</td><td>از داخل تاریخچهٔ پرداخت‌های مینی‌اپ دوباره اقدام کنید.</td></tr>
+              <tr><td><code class="inl">username is required</code></td><td>نام کاربری سرویس ارسال نشده است.</td><td>درخواست فهرست لوکیشن‌های تمدید بدون پارامتر <code class="inl">username</code> ارسال شده.</td><td>سرویس را از فهرست سرویس‌های خودتان دوباره انتخاب کنید.</td></tr>
+              <tr><td><code class="inl">Payment not found</code></td><td>رکورد پرداخت پیدا نشد.</td><td><code class="inl">order_id</code> با هیچ پرداختی در دیتابیس مطابقت ندارد.</td><td>شناسهٔ پرداخت را بررسی کنید یا دوباره پرداخت را آغاز کنید.</td></tr>
+              <tr><td><code class="inl">Service not found</code></td><td>سرویس فعالی با این نام کاربری پیدا نشد.</td><td>یوزرنیم واردشده متعلق به سرویس فعال کاربر نیست یا سرویس منقضی/حذف شده.</td><td>نام کاربری سرویس را از پنل «سرویس‌های من» بررسی کنید.</td></tr>
+              <tr><td><code class="inl">panel not found (invalid id_panel)</code></td><td>پنل انتخابی در دیتابیس پیدا نشد.</td><td><code class="inl">id_panel</code> ارسالی نامعتبر است یا پنل حذف/غیرفعال شده.</td><td>از «مدیریت پنل» پنل را دوباره انتخاب یا ثبت کنید.</td></tr>
+              <tr><td><code class="inl">Service data unavailable</code></td><td>اطلاعات کانفیگ سرویس در دسترس نیست.</td><td>دریافت اطلاعات سرویس از پنل ریموت ناموفق یا خالی بوده.</td><td>چند لحظه بعد دوباره تلاش کنید؛ در صورت تکرار وضعیت پنل را بررسی کنید.</td></tr>
+              <tr class="section-row"><td colspan="4">خطاهای دسترسی ادمین (پنل مدیریتی مینی‌اپ)</td></tr>
+              <tr><td><code class="inl">admin only</code></td><td>این عملیات فقط برای ادمین مجاز است.</td><td>کاربر عادی سعی کرده عملیات مخصوص ادمین (آپلود برند، تنظیمات، ساخت/حذف اعلان) را انجام دهد.</td><td>با حساب ادمین وارد شوید.</td></tr>
+              <tr><td><code class="inl">forbidden</code></td><td>دسترسی به این تیکت/عملیات مجاز نیست.</td><td>کاربر مالک تیکت یا منبع درخواستی نیست.</td><td>با حساب صحیح وارد شوید.</td></tr>
+              <tr><td><code class="inl">notification not found</code></td><td>اعلان موردنظر برای حذف پیدا نشد.</td><td>شناسهٔ اعلان نامعتبر است یا قبلاً حذف شده.</td><td>فهرست اعلان‌ها را رفرش کنید.</td></tr>
+              <tr><td><code class="inl">branding folder is not writable on server</code></td><td>پوشهٔ ذخیرهٔ لوگوی برند روی سرور قابل نوشتن نیست.</td><td>مجوز نوشتن (write permission) روی مسیر <code class="inl">app/assets/branding</code> وجود ندارد.</td><td>مجوز پوشه را برای کاربر وب‌سرور اصلاح کنید.</td></tr>
+              <tr><td><code class="inl">image resize failed (GD missing or write error)</code></td><td>تغییر سایز تصویر لوگو ناموفق بود.</td><td>اکستنشن GD در PHP نصب نیست یا نوشتن فایل خروجی با خطا مواجه شده.</td><td>نصب اکستنشن <code class="inl">gd</code> و دسترسی نوشتن پوشه را بررسی کنید.</td></tr>
+              <tr><td><code class="inl">cannot save brand setting</code> / <code class="inl">cannot load notifications</code> / <code class="inl">cannot save notification</code> / <code class="inl">cannot delete notification</code></td><td>عملیات دیتابیسی مربوط به تنظیمات برند یا اعلان‌ها ناموفق بود.</td><td>خطای اتصال یا نوشتن/خواندن در دیتابیس هنگام ذخیره/حذف رکورد.</td><td>اتصال دیتابیس را بررسی و دوباره تلاش کنید.</td></tr>
+              <tr class="section-row"><td colspan="4">خطاهای ورود و احراز هویت مینی‌اپ (Auth)</td></tr>
+              <tr><td><code class="inl">Telegram init data payload is empty</code></td><td>داده‌های اولیهٔ ورود از تلگرام خالی است.</td><td>مینی‌اپ init data را ناقص یا خالی ارسال کرده است.</td><td>مینی‌اپ را از داخل ربات تلگرام دوباره باز کنید.</td></tr>
+              <tr><td><code class="inl">Telegram init data is missing required signature</code></td><td>امضای امنیتی (hash) در init data وجود ندارد.</td><td>فیلد <code class="inl">hash</code> از داده‌های init data حذف یا دستکاری شده است.</td><td>مینی‌اپ را دوباره از داخل ربات باز کنید.</td></tr>
+              <tr><td><code class="inl">User verification failed</code></td><td>تأیید هویت کاربر بر پایهٔ init data ناموفق بود.</td><td>امضای HMAC محاسبه‌شده با هش ارسالی تلگرام مطابقت ندارد؛ نشانهٔ دستکاری یا انقضای نشست.</td><td>مینی‌اپ را دوباره از داخل ربات باز کنید؛ در صورت تکرار توکن ربات را بررسی کنید.</td></tr>
+              <tr><td><code class="inl">User data is missing or malformed in init data</code></td><td>اطلاعات کاربر در داده‌های ورودی ناقص است.</td><td>فیلد <code class="inl">user</code> در init data وجود ندارد یا قابل خواندن نیست.</td><td>مینی‌اپ را دوباره باز کنید.</td></tr>
+              <tr><td><code class="inl">Contact data is missing or invalid</code> / <code class="inl">Contact data payload is empty</code> / <code class="inl">Contact data has expired</code> / <code class="inl">Contact payload is missing or malformed</code></td><td>مرحلهٔ تأیید شمارهٔ تلفن (احراز هویت با اشتراک مخاطب) ناموفق بود.</td><td>داده‌های اشتراک مخاطب ارسال‌نشده، ناقص، منقضی (بیش از ۲۴ ساعت) یا دستکاری‌شده است.</td><td>عملیات اشتراک‌گذاری شماره تلفن را در مینی‌اپ دوباره انجام دهید.</td></tr>
+              <tr><td><code class="inl">Contact data is missing required signature</code></td><td>امضای امنیتی داده‌های تماس وجود ندارد.</td><td>فیلد <code class="inl">hash</code> در payload اشتراک مخاطب حذف شده.</td><td>عملیات را از ابتدا در مینی‌اپ تکرار کنید.</td></tr>
+              <tr><td><code class="inl">Contact verification failed</code></td><td>تأیید هویت بر اساس شمارهٔ تلفن مخاطب ناموفق بود.</td><td>امضای HMAC داده‌های تماس با هیچ‌یک از کلیدهای معتبر مطابقت ندارد.</td><td>عملیات را دوباره از داخل ربات تلگرام انجام دهید.</td></tr>
+              <tr class="section-row"><td colspan="4">خطاهای پرداخت (درگاه‌ها)</td></tr>
+              <tr><td><code class="inl">خطا در اتصال: {پیام cURL انگلیسی، مثل Could not resolve host / Connection timed out}</code></td><td>اتصال به سرور زرین‌پال برای تأیید پرداخت برقرار نشد.</td><td>خطای شبکه در سطح cURL هنگام تماس با API زرین‌پال (DNS، قطعی، گواهی SSL و مشابه)؛ متن انگلیسی خام cURL بعد از این پیام درج می‌شود.</td><td>در صورت تکرار، اتصال شبکهٔ سرور به درگاه پرداخت را بررسی کنید.</td></tr>
+              <tr><td><code class="inl">$result['message']</code> (پیام انگلیسی خام از درگاه)</td><td>درگاه زرین‌پال درخواست تأیید پرداخت را رد کرده و دلیل را به انگلیسی برگردانده است.</td><td>پرداخت ناموفق، لغوشده، یا مبلغ/شناسهٔ نامعتبر از دید خود درگاه.</td><td>پیام دقیق بازگشتی از درگاه را در لاگ بررسی کنید.</td></tr>
+              <tr><td><code class="inl">⭕️ خطا در ساخت لینک اقای پرداخت ✍️ دلیل خطا : {reason}</code></td><td>ساخت لینک پرداخت در درگاه آقای پرداخت (کارت‌به‌کارت هوشمند) ناموفق بود.</td><td>پاسخ درگاه ناموفق بوده یا خطای شبکه رخ داده؛ متن دقیق (اغلب انگلیسی) از خود درگاه در پیام درج می‌شود.</td><td>تنظیمات و اتصال درگاه آقای پرداخت را بررسی کنید؛ فقط در گروه ادمین دیده می‌شود.</td></tr>
+              <tr class="section-row"><td colspan="4">خطاهای پنل‌های ریموت (فقط لاگ/گروه ادمین)</td></tr>
+              <tr><td><code class="inl">User Not Found</code> / <code class="inl">User UUID Not Found</code></td><td>رکورد کاربر یا شناسهٔ UUID او روی پنل Remnawave پیدا نشد.</td><td>عملیات (تمدید، تغییر حجم، فعال/غیرفعال‌سازی، حذف) روی کاربری اجرا شده که رکورد محلی‌اش <code class="inl">panel_uuid</code> ندارد یا حذف شده.</td><td>وضعیت اکانت را روی پنل Remnawave و جدول <code class="inl">remnawave_users</code> بررسی کنید.</td></tr>
+              <tr><td><code class="inl">create failed</code> / <code class="inl">create failed ({code})</code></td><td>ساخت کاربر روی پنل Remnawave ناموفق بود.</td><td>پاسخ API ساخت کاربر Remnawave غیر ۲۰۰/۲۰۱ بوده یا فیلد پیام نداشته؛ کد HTTP خام در پرانتز درج می‌شود.</td><td>توکن API، Squad ID و اتصال پنل Remnawave را بررسی کنید.</td></tr>
+              <tr><td><code class="inl">fetch failed</code> / <code class="inl">revoke failed</code> / <code class="inl">invalid days</code></td><td>عملیات دریافت اطلاعات کاربر، ابطال لینک اشتراک، یا تمدید گروهی روی Remnawave ناموفق بود.</td><td>فراخوانی API مربوطه شکست خورده، یا مقدار روزهای تمدید نامعتبر (صفر یا منفی) ارسال شده.</td><td>لاگ سرور و پارامترهای ارسالی به عملیات را بررسی کنید.</td></tr>
+              <tr><td><code class="inl">Guard API key is missing</code> / <code class="inl">Unable to connect to Guard</code></td><td>کلید API پنل Guard تنظیم نشده یا اتصال به آن برقرار نشد.</td><td>هنگام نرمال‌سازی تنظیمات پنل، فیلد کلید خالی است یا تست اتصال بدون پیام مشخص شکست خورده.</td><td>کلید API و آدرس پنل Guard را در تنظیمات پنل بررسی کنید.</td></tr>
+              <tr><td><code class="inl">No valid service id provided</code> / <code class="inl">Invalid auto renewal format</code> / <code class="inl">Invalid numbers in auto renewal</code></td><td>پارامترهای ارسالی برای ساخت/به‌روزرسانی سرویس یا تنظیمات تمدید خودکار روی Guard نامعتبرند.</td><td>مقدار <code class="inl">service_ids</code> قابل تفسیر نیست، یا تنظیمات تمدید خودکار فرمت/اعداد نامعتبر دارند.</td><td>تنظیمات محصول/سرویس مرتبط با پنل Guard را بررسی کنید.</td></tr>
+              <tr><td><code class="inl">Unknown panel error</code></td><td>پنل x-ui/3x-ui خطایی بدون پیام مشخص برگردانده است.</td><td>پاسخ API با <code class="inl">success:false</code> اما بدون فیلد <code class="inl">msg</code> دریافت شده.</td><td>لاگ درخواست را برای جزئیات بیشتر بررسی کنید.</td></tr>
+              <tr><td><code class="inl">HTTP {code}</code> (خام) / <code class="inl">invalid response</code></td><td>پاسخ پنل x-ui/3x-ui در حالت token mode ناموفق یا ناقص بود.</td><td>کد HTTP غیر ۲۰۰ بدون بدنهٔ قابل استفاده، یا پاسخ ۲۰۰ اما بدون فیلد <code class="inl">success</code>/<code class="inl">obj</code>.</td><td>اتصال و نسخهٔ پنل x-ui/3x-ui را بررسی کنید.</td></tr>
+              <tr><td><code class="inl">Inbound Not Found For Email</code></td><td>اینباند مرتبط با کاربر روی پنل x-ui/3x-ui پیدا نشد.</td><td>این پیام مستقیماً از خود پنل x-ui برمی‌گردد؛ ربات آن را برای تلاش خودکار جهت ترمیم اینباند شناسایی می‌کند.</td><td>در صورت تکرار، اینباندهای پنل را دستی بررسی کنید.</td></tr>
+              <tr class="section-row"><td colspan="4">قالب‌های گزارش خطا در گروه ادمین</td></tr>
+              <tr><td><code class="inl">خطای تمدید سرویس · نام پنل: {panel} · نام کاربری سرویس: {username} · دلیل خطا: {reason}</code></td><td>تمدید سرویس روی پنل ریموت ناموفق بود.</td><td><code class="inl">{reason}</code> همان پیام خام (اغلب انگلیسی) بازگشتی از پنل هنگام تمدید است.</td><td>پیام کامل در گروه ادمین را برای تشخیص پنل و علت دقیق بررسی کنید.</td></tr>
+              <tr><td><code class="inl">خطای خرید حجم/زمان اضافه · نام پنل: {panel} · نام کاربری سرویس: {username} · دلیل خطا: {reason}</code></td><td>خرید حجم یا زمان اضافه روی پنل ریموت ناموفق بود.</td><td><code class="inl">{reason}</code> پیام خام پنل هنگام افزایش حجم/زمان سرویس است.</td><td>پیام کامل در گروه ادمین را بررسی و پنل مربوطه را تست کنید.</td></tr>
+              <tr class="section-row"><td colspan="4">خطاهای داخلی و شبکه (سطح سرور)</td></tr>
+              <tr><td><code class="inl">Internal error. Check logs/runtime.log</code></td><td>خطای مدیریت‌نشده در هستهٔ ربات (نسخهٔ بازنویسی‌شده) رخ داده است.</td><td>استثنای غیرمنتظره در مسیر کلاسیک ربات/وب‌هوک رخ داده و به‌صورت متن ساده (نه JSON) برگردانده شده.</td><td>فایل <code class="inl">logs/runtime.log</code> را برای جزئیات کامل خطا بررسی کنید.</td></tr>
+              <tr><td><code class="inl">CurlRequest call to {URL} returned HTTP code {code}</code></td><td>پنل با یک کد وضعیت HTTP ناموفق پاسخ داده، بدون اینکه خطای اتصال (cURL) رخ داده باشد.</td><td>خود اتصال برقرار شده اما پنل کد خطا (۴xx/۵xx) برگردانده است.</td><td>فقط در لاگ سرور ثبت می‌شود؛ کد HTTP بازگشتی و در دسترس‌بودن پنل را بررسی کنید.</td></tr>
+              <tr><td><code class="inl">CurlRequest error calling {URL}: {هر پیام خطای cURL}</code></td><td>الگوی کلی خطاهای اتصال شبکه به پنل‌ها؛ نمونه‌های رایج «Connection refused» و «Operation timed out» بالاتر آمده، اما این قالب هر خطای دیگر cURL (مثل DNS نامعتبر یا مشکل گواهی SSL) را هم شامل می‌شود.</td><td>هرگونه خطای سطح شبکه/TLS هنگام تماس ربات با پنل‌های ریموت.</td><td>فقط در لاگ سرور ثبت می‌شود؛ متن دقیق خطای cURL راهنمای عیب‌یابی شبکه است.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </article>
+  </div>
+</main>
+
+<footer class="foot">
+  <div class="foot-in">
+    <div class="l">
+      <a href="https://github.com/Mmd-Amir/Faoxima" target="_blank" rel="noopener">گیت‌هاب</a>
+      <span aria-hidden="true">·</span>
+      <a href="#top">بازگشت به بالا</a>
+    </div>
+    <div class="l">
+      <span class="brand-pill brand-pill-sm">
+        <span class="logo"><img src="./faoxima.jpg" alt="faoxima"></span>
+        <b>faoxima · GPL-3.0</b>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<div class="overlay" id="overlay" aria-hidden="true"></div>
+
+<script>
+(function(){
+  var root=document.documentElement;
+  var KEY="faxima-theme";
+  try{
+    var saved=localStorage.getItem(KEY);
+    if(saved){root.setAttribute("data-theme",saved);}
+    else if(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches){root.setAttribute("data-theme","dark");}
+  }catch(e){}
+  var tBtn=document.getElementById("themeBtn");
+  if(tBtn){tBtn.addEventListener("click",function(){
+    var next=root.getAttribute("data-theme")==="dark"?"light":"dark";
+    root.setAttribute("data-theme",next);
+    try{localStorage.setItem(KEY,next);}catch(e){}
+  });}
+
+  var body=document.body,menuBtn=document.getElementById("menuBtn"),overlay=document.getElementById("overlay"),sidebar=document.getElementById("sidebar");
+  function closeNav(){body.classList.remove("nav-open");if(menuBtn)menuBtn.setAttribute("aria-expanded","false");}
+  function openNav(){body.classList.add("nav-open");if(menuBtn)menuBtn.setAttribute("aria-expanded","true");}
+  if(menuBtn){menuBtn.addEventListener("click",function(){body.classList.contains("nav-open")?closeNav():openNav();});}
+  if(overlay){overlay.addEventListener("click",closeNav);}
+  document.addEventListener("keydown",function(e){if(e.key==="Escape")closeNav();});
+
+  var links=Array.prototype.slice.call(document.querySelectorAll(".nav-link"));
+  links.forEach(function(a){a.addEventListener("click",function(){if(window.innerWidth<=980)closeNav();});});
+
+  document.querySelectorAll(".copy").forEach(function(btn){
+    btn.addEventListener("click",function(){
+      var code=btn.closest(".codeblock").querySelector("code");
+      var txt=code?code.textContent:"";
+      var done=function(){var o=btn.textContent;btn.textContent="کپی شد";btn.classList.add("done");setTimeout(function(){btn.textContent=o;btn.classList.remove("done");},1600);};
+      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(done).catch(function(){});}
+      else{try{var t=document.createElement("textarea");t.value=txt;document.body.appendChild(t);t.select();document.execCommand("copy");document.body.removeChild(t);done();}catch(e){}}
+    });
+  });
+
+  var errSearch=document.getElementById("errSearch");
+  if(errSearch){
+    var errRows=Array.prototype.slice.call(document.querySelectorAll("#errTable tbody tr"));
+    errSearch.addEventListener("input",function(){
+      var q=errSearch.value.trim().toLowerCase();
+      errRows.forEach(function(row){
+        var match=!q||row.textContent.toLowerCase().indexOf(q)!==-1;
+        row.classList.toggle("hide",!match);
+      });
+    });
+  }
+
+  var errTable=document.getElementById("errTable");
+  if(errTable){
+    var headLabels=Array.prototype.slice.call(errTable.querySelectorAll("thead th")).map(function(th){return th.textContent.trim();});
+    Array.prototype.slice.call(errTable.querySelectorAll("tbody tr")).forEach(function(row){
+      if(row.classList.contains("section-row"))return;
+      Array.prototype.slice.call(row.children).forEach(function(td,i){
+        td.setAttribute("data-col",i);
+        td.setAttribute("data-label",headLabels[i]||"");
+      });
+    });
+    var mq=window.matchMedia("(max-width:767px)");
+    var syncCardview=function(){errTable.classList.toggle("cardview",mq.matches);};
+    syncCardview();
+    if(mq.addEventListener){mq.addEventListener("change",syncCardview);}
+    else if(mq.addListener){mq.addListener(syncCardview);}
+  }
+})();
+</script>
+</body>
+</html>
