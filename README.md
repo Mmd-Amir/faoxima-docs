@@ -26,10 +26,10 @@
 
 | فایل | توضیح |
 |---|---|
-| [`index.html`]([.](https://mmd-amir.github.io/faoxima-docs/)/index.html) | صفحهٔ اصلی — معرفی، امکانات، پنل‌های پشتیبانی‌شده، سوالات متداول |
-| [`install.html`]([.](https://mmd-amir.github.io/faoxima-docs/)/install.html) | راهنمای نصب و راه‌اندازی (سرور اوبونتو و هاست cPanel/aaPanel) |
-| [`migrate.html`]([.](https://mmd-amir.github.io/faoxima-docs/)/migrate.html) | راهنمای مهاجرت از ربات میرزا |
-| [`errors.html`]([.](https://mmd-amir.github.io/faoxima-docs/)/errors.html) | مرجع کامل خطاهای ربات و راه‌حل هرکدام |
+| [`index.html`](https://mmd-amir.github.io/faoxima-docs/index.html) | صفحهٔ اصلی — معرفی، امکانات، پنل‌های پشتیبانی‌شده، سوالات متداول |
+| [`install.html`](https://mmd-amir.github.io/faoxima-docs/install.html) | راهنمای نصب و راه‌اندازی (سرور اوبونتو و هاست cPanel/aaPanel) |
+| [`migrate.html`](https://mmd-amir.github.io/faoxima-docs/migrate.html) | راهنمای مهاجرت از ربات میرزا |
+| [`errors.html`](https://mmd-amir.github.io/faoxima-docs/errors.html) | مرجع کامل خطاهای ربات و راه‌حل هرکدام |
 
 ### ✨ ویژگی‌های کلیدی faoxima
 
