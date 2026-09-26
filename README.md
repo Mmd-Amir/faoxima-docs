@@ -8,8 +8,8 @@
 
 [![PHP](https://img.shields.io/badge/PHP-8.2%20--%208.3-777bb4?logo=php&logoColor=white)](https://www.php.net/)
 [![License](https://img.shields.io/badge/License-GPL--3.0-green.svg)](https://github.com/Mmd-Amir/Faoxima/blob/main/LICENSE)
-[![Bot](https://img.shields.io/badge/Bot-v1.0.0-2ea6ff)](#)
-[![Mini App](https://img.shields.io/badge/Mini%20App-v1.0.0-7b61ff)](#)
+[![Bot](https://img.shields.io/badge/Bot-v1.1.5-2ea6ff)](#)
+[![Mini App](https://img.shields.io/badge/Mini%20App-v1.1.5-7b61ff)](#)
 [![Based on](https://img.shields.io/badge/Based%20on-Mirza-e74c3c)](#)
 
 [ریپوی اصلی](https://github.com/Mmd-Amir/Faoxima) · [کانال تلگرام](#)
